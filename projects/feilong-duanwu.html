@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飞龙在天·利见大人 — QWHE 周游</title>
+<meta name="description" content="为百度打造的端午高端礼盒，以'飞龙在天'为主题，融合传统龙纹图腾与现代包装工艺。礼盒采用烫金工艺与立体浮雕技术，将中国传统文化元素与现代设计语言完美结合，呈现出高端大气的视觉效果。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a; --bg-elevated: #111111; --fg: #f5f0eb; --fg-muted: #8a8580;
+  --accent: #c8a97e; --accent-light: #e0c9a6; --accent-dark: #a08050;
+  --card-bg: #151515; --border: #222222;
+  --font-display: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+  --font-body: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent-dark) var(--bg); }
+body { font-family: var(--font-body); background: var(--bg); color: var(--fg); line-height: 1.6; overflow-x: hidden; cursor: none; }
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 3px; }
+::selection { background: var(--accent); color: var(--bg); }
+a { color: inherit; text-decoration: none; cursor: none; } button { cursor: none; }
+img { display: block; max-width: 100%; height: auto; }
+body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.035; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+.loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 10000; transition: opacity 0.6s var(--ease-out-expo), visibility 0.6s; }
+.loader.hidden { opacity: 0; visibility: hidden; }
+.loader-text { font-family: var(--font-display); font-size: 1.2rem; font-weight: 300; letter-spacing: 0.5em; color: var(--accent); animation: loaderPulse 1.5s ease-in-out infinite; }
+@keyframes loaderPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+.cursor { position: fixed; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background 0.3s; mix-blend-mode: difference; }
+.cursor.hover { width: 40px; height: 40px; background: rgba(200, 169, 126, 0.15); border: 1px solid var(--accent); }
+.cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); }
+.page-content { opacity: 0; transform: translateY(20px); transition: opacity 0.8s var(--ease-out-expo) 0.3s, transform 0.8s var(--ease-out-expo) 0.3s; }
+.page-content.loaded { opacity: 1; transform: translateY(0); }
+.back-btn { position: fixed; top: 1.5rem; left: 2rem; z-index: 1000; display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 0.8rem; font-weight: 400; letter-spacing: 0.08em; color: var(--fg-muted); background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); padding: 0.6rem 1.2rem; border-radius: 6px; transition: color 0.3s, border-color 0.3s; }
+.back-btn:hover { color: var(--accent); border-color: var(--accent); }
+.back-btn .arrow { transition: transform 0.3s var(--ease-out-expo); }
+.back-btn:hover .arrow { transform: translateX(-4px); }
+.project-hero { position: relative; height: 80vh; min-height: 500px; overflow: hidden; display: flex; align-items: flex-end; }
+.project-hero .hero-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+.project-hero .hero-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(transparent, var(--bg)); }
+.project-hero .hero-content { position: relative; z-index: 1; padding: 4rem 2.5rem; max-width: 1400px; margin: 0 auto; width: 100%; }
+.project-info { padding: 3rem 2.5rem; max-width: 1400px; margin: 0 auto; }
+.project-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+.meta-tag { font-family: var(--font-display); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: rgba(200, 169, 126, 0.08); border: 1px solid rgba(200, 169, 126, 0.15); padding: 0.4rem 0.8rem; border-radius: 4px; }
+.project-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15; margin-bottom: 0.5rem; }
+.project-subtitle { font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 2rem; }
+.project-description { padding: 0 2.5rem 4rem; max-width: 800px; margin: 0 auto; }
+.project-description p { font-size: 1.05rem; line-height: 1.9; color: var(--fg-muted); margin-bottom: 1.2rem; }
+.project-gallery { padding: 2rem 2.5rem 4rem; max-width: 1200px; margin: 0 auto; }
+.gallery-image-wrap { position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.gallery-image-wrap img { width: 100%; display: block; transition: transform 0.6s var(--ease-out-expo); }
+.gallery-image-wrap:hover img { transform: scale(1.02); }
+.project-nav { display: flex; justify-content: space-between; align-items: center; padding: 3rem 2.5rem; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border); }
+.project-nav a { display: flex; align-items: center; gap: 0.8rem; font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.05em; color: var(--fg-muted); transition: color 0.3s; max-width: 40%; }
+.project-nav a:hover { color: var(--accent); }
+.project-nav a .nav-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 0.2rem; }
+.project-nav a .nav-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-nav .nav-arrow { font-size: 1.2rem; flex-shrink: 0; }
+.footer { padding: 2rem 2.5rem; text-align: center; font-size: 0.75rem; color: var(--fg-muted); letter-spacing: 0.05em; }
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+@media (max-width: 768px) {
+  .cursor, .cursor-dot { display: none; } body { cursor: auto; } a, button { cursor: pointer; }
+  .back-btn { top: 1rem; left: 1rem; font-size: 0.75rem; padding: 0.5rem 1rem; }
+  .project-hero { height: 60vh; min-height: 400px; } .project-hero .hero-content { padding: 2rem 1.5rem; }
+  .project-info { padding: 2rem 1.5rem; } .project-description { padding: 0 1.5rem 3rem; }
+  .project-gallery { padding: 1.5rem 1.5rem 3rem; }
+  .project-nav { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; } .project-nav a { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="loader" id="loader"><div class="loader-text">QWHE</div></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="page-content" id="pageContent">
+<a href="../index.html" class="back-btn" id="backBtn"><span class="arrow">&larr;</span> Back to Works</a>
+<section class="project-hero">
+  <img class="hero-image" src="../images/feilong-duanwu.jpg" alt="飞龙在天·利见大人" id="heroImage">
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <h1 class="project-title reveal">飞龙在天·利见大人</h1>
+    <p class="project-subtitle reveal reveal-delay-1">百度端午高端礼盒包装</p>
+  </div>
+</section>
+<div class="project-info">
+  <div class="project-meta reveal">
+    <span class="meta-tag">Packaging Design</span>
+    <span class="meta-tag">Client: Baidu</span>
+    <span class="meta-tag">2022</span>
+  </div>
+</div>
+<div class="project-description reveal reveal-delay-1"><p>为百度打造的端午高端礼盒，以'飞龙在天'为主题，融合传统龙纹图腾与现代包装工艺。礼盒采用烫金工艺与立体浮雕技术，将中国传统文化元素与现代设计语言完美结合，呈现出高端大气的视觉效果。</p></div>
+<div class="project-gallery reveal reveal-delay-2">
+  <div class="gallery-image-wrap"><img src="../images/feilong-duanwu.jpg" alt="飞龙在天·利见大人" loading="lazy"></div>
+</div>
+<nav class="project-nav reveal">
+  <a href="vr-glasses.html" class="nav-prev"><div><div class="nav-label">Previous</div><div class="nav-title" id="prevTitle"></div></div><span class="nav-arrow">&larr;</span></a>
+  <a href="baidu-zhongqiu-xingxing.html" class="nav-next" style="text-align:right;"><div><div class="nav-label">Next</div><div class="nav-title" id="nextTitle"></div></div><span class="nav-arrow">&rarr;</span></a>
+</nav>
+<footer class="footer"><p>&copy; 2024 QWHE (周游). All rights reserved.</p></footer>
+</div>
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('load', function() { setTimeout(function() { document.getElementById('loader').classList.add('hidden'); document.getElementById('pageContent').classList.add('loaded'); }, 400); });
+  var cursor = document.getElementById('cursor'), cursorDot = document.getElementById('cursorDot'), mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+  document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
+  function animCursor() { cursorX += (mouseX - cursorX) * 0.12; cursorY += (mouseY - cursorY) * 0.12; cursor.style.left = cursorX + 'px'; cursor.style.top = cursorY + 'px'; cursorDot.style.left = mouseX + 'px'; cursorDot.style.top = mouseY + 'px'; requestAnimationFrame(animCursor); }
+  animCursor();
+  document.querySelectorAll('a, button').forEach(function(el) { el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); }); el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); }); });
+  document.getElementById('backBtn').addEventListener('click', function(e) { e.preventDefault(); var pc = document.querySelector('.page-content'); pc.style.opacity = '0'; pc.style.transform = 'translateY(-20px)'; setTimeout(function() { window.location.href = '../index.html'; }, 300); });
+  var reveals = document.querySelectorAll('.reveal');
+  var obs = new IntersectionObserver(function(entries) { entries.forEach(function(entry) { if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(function(el) { obs.observe(el); });
+  var heroImg = document.getElementById('heroImage');
+  window.addEventListener('scroll', function() { var s = window.pageYOffset; if (heroImg) heroImg.style.transform = 'translateY(' + (s * 0.3) + 'px) scale(1.1)'; }, { passive: true });
+  var titles = {"feilong-duanwu": "飞龙在天·利见大人", "baidu-zhongqiu-xingxing": "行星探测联名盲盒", "ant-financial": "商务创意摆件", "bytedance-duanwu": "字节范端午衍生品", "tencent-q2": "季度创意产品", "ziru-newyear": "新年礼品设计", "sogou-translate": "翻译宝礼盒", "didi-incense": "香插礼品设计", "duxiaoman-zhongqiu": "中秋员工礼品", "wangzherongyao": "王者荣耀周边", "baidu-newyear": "新年礼包", "vr-glasses": "VR眼镜包装"};
+  var prevEl = document.getElementById('prevTitle'), nextEl = document.getElementById('nextTitle');
+  if (prevEl) prevEl.textContent = titles['vr-glasses'] || '';
+  if (nextEl) nextEl.textContent = titles['baidu-zhongqiu-xingxing'] || '';
+})();
+</script>
+</body>
+</html>

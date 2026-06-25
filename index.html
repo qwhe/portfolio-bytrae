@@ -1,529 +1,1271 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QWHE - Brand Gift Packaging &amp; IP Design</title>
-  <meta name="description" content="QWHE (Zhou You) - Brand gift packaging design, IP derivatives, H5 interactive design portfolio.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* ========== RESET & BASE ========== */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a0a0a;
-      color: #e0e0e0;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; height: auto; }
-    ::selection { background: #c8a97e; color: #0a0a0a; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QWHE — 周游 | 品牌设计 · 礼品包装 · IP衍生</title>
+<meta name="description" content="QWHE (周游) — 北京品牌设计师，专注品牌礼品包装设计、IP衍生品、H5互动设计。曾服务百度、蚂蚁金服、腾讯、字节跳动等。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========== CSS Custom Properties ========== */
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #111111;
+  --fg: #f5f0eb;
+  --fg-muted: #8a8580;
+  --accent: #c8a97e;
+  --accent-light: #e0c9a6;
+  --accent-dark: #a08050;
+  --card-bg: #151515;
+  --border: #222222;
+  --font-display: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+  --font-body: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
 
-    /* ========== NAV ========== */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 1.25rem 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(10,10,10,0.8);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(200,169,126,0.1);
-      transition: all 0.4s ease;
-    }
-    .nav.scrolled { padding: 0.75rem 2rem; background: rgba(10,10,10,0.95); }
-    .nav-logo {
-      font-size: 1.25rem; font-weight: 700; letter-spacing: 0.15em;
-      color: #c8a97e;
-    }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em;
-      text-transform: uppercase; color: #999;
-      transition: color 0.3s ease; position: relative;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px; background: #c8a97e;
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover { color: #c8a97e; }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .nav-toggle span { display: block; width: 24px; height: 2px; background: #c8a97e; transition: all 0.3s ease; }
-    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .nav-toggle.active span:nth-child(2) { opacity: 0; }
-    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+/* ========== Reset & Base ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ========== HERO ========== */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
-      padding: 2rem; position: relative;
-    }
-    .hero::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 50% 50%, rgba(200,169,126,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-label {
-      font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: #c8a97e; margin-bottom: 1.5rem; opacity: 0;
-      animation: fadeUp 0.8s ease 0.2s forwards;
-    }
-    .hero h1 {
-      font-size: clamp(3rem, 8vw, 7rem); font-weight: 700;
-      line-height: 1.05; letter-spacing: -0.02em; color: #fff;
-      opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
-    }
-    .hero h1 .accent { color: #c8a97e; }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem); color: #888;
-      margin-top: 1.5rem; max-width: 600px; font-weight: 300;
-      opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
-    }
-    .hero-location {
-      font-size: 0.85rem; color: #666; margin-top: 0.75rem;
-      opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
-    }
-    .hero-scroll {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      opacity: 0; animation: fadeUp 0.8s ease 1s forwards;
-    }
-    .hero-scroll span { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #555; }
-    .hero-scroll-line {
-      width: 1px; height: 40px; background: linear-gradient(to bottom, #c8a97e, transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
-    }
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-dark) var(--bg);
+}
 
-    /* ========== SECTION COMMON ========== */
-    .section {
-      padding: 6rem 2rem; max-width: 1400px; margin: 0 auto;
-    }
-    .section-header {
-      margin-bottom: 3.5rem;
-    }
-    .section-label {
-      font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: #c8a97e; margin-bottom: 0.75rem;
-    }
-    .section-title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600;
-      color: #fff; letter-spacing: -0.01em;
-    }
-    .section-divider {
-      width: 60px; height: 2px; background: #c8a97e; margin-top: 1rem;
-    }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-    /* ========== FEATURED WORKS ========== */
-    .featured-grid {
-      display: grid; grid-template-columns: 1fr; gap: 2rem;
-    }
-    @media (min-width: 768px) {
-      .featured-grid { grid-template-columns: 1fr 1fr; }
-      .featured-grid .project-card:first-child { grid-column: 1 / -1; }
-    }
-    .project-card {
-      position: relative; overflow: hidden; border-radius: 12px;
-      cursor: pointer; background: #111;
-    }
-    .project-card .card-image {
-      width: 100%; aspect-ratio: 16/9; object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .project-card:hover .card-image { transform: scale(1.05); }
-    .card-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.3) 40%, transparent 100%);
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 2rem; transition: background 0.4s ease;
-    }
-    .project-card:hover .card-overlay {
-      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 50%, rgba(200,169,126,0.05) 100%);
-    }
-    .card-tag {
-      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: #c8a97e; margin-bottom: 0.5rem;
-    }
-    .card-title {
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 600;
-      color: #fff; line-height: 1.3;
-    }
-    .card-desc {
-      font-size: 0.85rem; color: #999; margin-top: 0.35rem;
-    }
-    .card-arrow {
-      position: absolute; top: 1.5rem; right: 1.5rem;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid rgba(200,169,126,0.4);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transform: translate(-10px, 10px);
-      transition: all 0.4s ease;
-    }
-    .project-card:hover .card-arrow { opacity: 1; transform: translate(0, 0); }
-    .card-arrow svg { width: 16px; height: 16px; stroke: #c8a97e; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 3px; }
 
-    /* ========== ALL WORKS GRID ========== */
-    .works-grid {
-      display: grid; grid-template-columns: 1fr; gap: 1.5rem;
-    }
-    @media (min-width: 640px) { .works-grid { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1024px) { .works-grid { grid-template-columns: 1fr 1fr 1fr; } }
-    .works-grid .project-card .card-image { aspect-ratio: 4/3; }
-    .works-grid .card-title { font-size: clamp(1rem, 1.5vw, 1.15rem); }
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
 
-    /* ========== ABOUT ========== */
-    .about-content {
-      display: grid; grid-template-columns: 1fr; gap: 3rem;
-      align-items: start;
-    }
-    @media (min-width: 768px) { .about-content { grid-template-columns: 1fr 1fr; } }
-    .about-text p {
-      font-size: 1.05rem; color: #bbb; line-height: 1.8;
-      margin-bottom: 1.25rem;
-    }
-    .about-text p:first-of-type::first-letter {
-      font-size: 3rem; font-weight: 700; color: #c8a97e;
-      float: left; line-height: 1; margin-right: 0.5rem; margin-top: 0.1rem;
-    }
-    .about-details { display: flex; flex-direction: column; gap: 1.5rem; }
-    .detail-item {
-      padding: 1.25rem; border-radius: 8px;
-      border: 1px solid rgba(200,169,126,0.15);
-      background: rgba(200,169,126,0.03);
-    }
-    .detail-label {
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: #c8a97e; margin-bottom: 0.5rem;
-    }
-    .detail-value { font-size: 0.95rem; color: #ddd; }
-    .detail-value a { color: #c8a97e; transition: opacity 0.3s; }
-    .detail-value a:hover { opacity: 0.7; }
-    .specialties {
-      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;
-    }
-    .specialty-tag {
-      font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 20px;
-      border: 1px solid rgba(200,169,126,0.25); color: #c8a97e;
-      background: rgba(200,169,126,0.05);
-    }
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: none;
+}
 
-    /* ========== CONTACT / FOOTER ========== */
-    .contact {
-      text-align: center; padding: 5rem 2rem;
-      border-top: 1px solid rgba(200,169,126,0.1);
-    }
-    .contact-heading {
-      font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600;
-      color: #fff; margin-bottom: 1rem;
-    }
-    .contact-email {
-      font-size: 1.1rem; color: #c8a97e; margin-bottom: 2rem;
-    }
-    .contact-email a { border-bottom: 1px solid rgba(200,169,126,0.3); transition: border-color 0.3s; }
-    .contact-email a:hover { border-color: #c8a97e; }
-    .social-links { display: flex; justify-content: center; gap: 1.5rem; }
-    .social-link {
-      font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #888; padding: 0.6rem 1.2rem; border: 1px solid #333;
-      border-radius: 6px; transition: all 0.3s ease;
-    }
-    .social-link:hover { color: #c8a97e; border-color: #c8a97e; }
-    .footer {
-      text-align: center; padding: 2rem;
-      font-size: 0.75rem; color: #444; letter-spacing: 0.05em;
-    }
+button { cursor: none; }
 
-    /* ========== FADE IN ANIMATION ========== */
-    .fade-in {
-      opacity: 0; transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 767px) {
-      .nav { padding: 1rem 1.25rem; }
-      .nav-links {
-        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(10,10,10,0.98); backdrop-filter: blur(20px);
-        flex-direction: column; align-items: center; justify-content: center;
-        gap: 2.5rem; opacity: 0; pointer-events: none;
-        transition: opacity 0.4s ease;
-      }
-      .nav-links.open { opacity: 1; pointer-events: all; }
-      .nav-links a { font-size: 1.1rem; }
-      .nav-toggle { display: flex; z-index: 1001; }
-      .section { padding: 4rem 1.25rem; }
-      .card-overlay { padding: 1.25rem; }
-      .hero { padding: 1.5rem; }
-    }
-  </style>
+/* ========== Noise Texture Overlay ========== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ========== Loading Animation ========== */
+.loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  transition: opacity 0.6s var(--ease-out-expo), visibility 0.6s;
+}
+
+.loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  color: var(--accent);
+  animation: loaderPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loaderPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ========== Custom Cursor ========== */
+.cursor {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background 0.3s;
+  mix-blend-mode: difference;
+}
+
+.cursor.hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(200, 169, 126, 0.15);
+  border: 1px solid var(--accent);
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+}
+
+/* ========== Navigation ========== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(200, 169, 126, 0.08);
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.nav.hidden { transform: translateY(-100%); }
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--fg-muted);
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.4s var(--ease-out-expo);
+}
+
+.nav-links a:hover { color: var(--fg); }
+.nav-links a:hover::after { width: 100%; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--fg);
+  transition: transform 0.4s var(--ease-out-expo), opacity 0.3s;
+}
+
+.hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(30px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s;
+}
+
+.mobile-menu.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--fg-muted);
+  transition: color 0.3s, transform 0.4s var(--ease-out-expo);
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.mobile-menu.active a {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.active a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu.active a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu.active a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu.active a:nth-child(5) { transition-delay: 0.3s; }
+
+.mobile-menu a:hover { color: var(--accent); }
+
+/* ========== Hero Section ========== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+
+.hero-bg .gradient-1 {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200, 169, 126, 0.08) 0%, transparent 70%);
+  top: -10%; right: -5%;
+  animation: floatGradient1 20s ease-in-out infinite;
+}
+
+.hero-bg .gradient-2 {
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(200, 169, 126, 0.05) 0%, transparent 70%);
+  bottom: -10%; left: -5%;
+  animation: floatGradient2 25s ease-in-out infinite;
+}
+
+.hero-bg .gradient-3 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(160, 128, 80, 0.06) 0%, transparent 70%);
+  top: 40%; left: 30%;
+  animation: floatGradient3 18s ease-in-out infinite;
+}
+
+@keyframes floatGradient1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, 30px) scale(1.1); }
+  66% { transform: translate(30px, -20px) scale(0.95); }
+}
+
+@keyframes floatGradient2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-30px, 20px) scale(1.1); }
+}
+
+@keyframes floatGradient3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, -40px) scale(1.15); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--fg);
+  line-height: 1;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.hero-name .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: letterReveal 0.8s var(--ease-out-expo) forwards;
+}
+
+@keyframes letterReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--fg-muted);
+  overflow: hidden;
+}
+
+.hero-subtitle .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: wordReveal 0.6s var(--ease-out-expo) forwards;
+}
+
+@keyframes wordReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tagline {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  opacity: 0;
+  animation: fadeIn 1s var(--ease-out-expo) 1.5s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeIn 1s var(--ease-out-expo) 2s forwards;
+}
+
+.scroll-indicator span {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+}
+
+.scroll-indicator .chevron {
+  width: 20px;
+  height: 20px;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  transform: rotate(45deg);
+  animation: bounceChevron 2s ease-in-out infinite;
+}
+
+@keyframes bounceChevron {
+  0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+  40% { transform: rotate(45deg) translateY(6px); }
+  60% { transform: rotate(45deg) translateY(3px); }
+}
+
+/* ========== Section Common ========== */
+.section {
+  padding: 6rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.section-line {
+  width: 60px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* ========== Featured Works ========== */
+.featured-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.featured-card {
+  position: relative;
+  height: 70vh;
+  min-height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: none;
+}
+
+.featured-card .card-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.featured-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.featured-card .card-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 3rem;
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
+  transform: translateY(60px);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.featured-card:hover .card-overlay {
+  transform: translateY(0);
+}
+
+.featured-card .card-category {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.featured-card .card-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.3rem;
+}
+
+.featured-card .card-subtitle {
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+  margin-bottom: 1rem;
+}
+
+.featured-card .card-link {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.3s var(--ease-out-expo);
+}
+
+.featured-card:hover .card-link { gap: 1rem; }
+
+.featured-card .card-link .arrow {
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.featured-card:hover .card-link .arrow {
+  transform: translateX(4px);
+}
+
+/* ========== All Works Grid ========== */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.work-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  cursor: none;
+  background: var(--card-bg);
+}
+
+.work-card .card-image {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out-expo);
+  will-change: transform;
+}
+
+.work-card:hover .card-image {
+  transform: scale(1.08);
+}
+
+.work-card .card-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: border-color 0.4s;
+  pointer-events: none;
+}
+
+.work-card:hover .card-border {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(200, 169, 126, 0.1);
+}
+
+.work-card .card-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.85));
+}
+
+.work-card .card-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(200, 169, 126, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.work-card .card-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.work-card .card-client {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  margin-top: 0.2rem;
+}
+
+/* ========== About Section ========== */
+.about {
+  padding: 6rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--fg);
+}
+
+.about-text h2 .accent { color: var(--accent); }
+
+.about-text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--fg-muted);
+  margin-bottom: 1rem;
+}
+
+.about-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stat-item {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+  margin-top: 0.3rem;
+}
+
+.clients-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.client-tag {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--fg-muted);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.client-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ========== Contact / Footer ========== */
+.contact {
+  padding: 6rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.contact-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--fg);
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.contact-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.4s var(--ease-out-expo);
+}
+
+.contact-link:hover { color: var(--fg); }
+.contact-link:hover::after { width: 100%; }
+
+.footer {
+  padding: 2rem 2.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ========== Scroll Animations ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+.reveal-delay-7 { transition-delay: 0.7s; }
+.reveal-delay-8 { transition-delay: 0.8s; }
+.reveal-delay-9 { transition-delay: 0.9s; }
+
+/* ========== Responsive ========== */
+@media (max-width: 1024px) {
+  .works-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .featured-card { height: 55vh; min-height: 400px; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+
+  .section { padding: 4rem 1.5rem; }
+  .about { padding: 4rem 1.5rem; }
+  .contact { padding: 4rem 1.5rem; }
+
+  .works-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+  .featured-card { height: 50vh; min-height: 350px; }
+  .featured-card .card-overlay { padding: 2rem; }
+
+  .hero-name { letter-spacing: 0.1em; }
+  .hero-subtitle { letter-spacing: 0.15em; }
+
+  .contact-links { gap: 1.5rem; flex-direction: column; align-items: center; }
+
+  .cursor, .cursor-dot { display: none; }
+  body { cursor: auto; }
+  a, button { cursor: pointer; }
+
+  .stat-number { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .nav { padding: 1rem 1.2rem; }
+  .featured-card { height: 45vh; min-height: 300px; }
+  .featured-card .card-overlay { transform: translateY(0); }
+}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-logo">QWHE</div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#works">Works</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="loader-text">QWHE</div>
+</div>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-label">Brand &amp; Packaging Designer</div>
-    <h1>QWHE<span class="accent">.</span></h1>
-    <p class="hero-sub">Brand gift packaging design, IP derivatives, and H5 interactive design. Crafting meaningful brand experiences through thoughtful design.</p>
-    <p class="hero-location">Beijing, China</p>
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="hero-scroll-line"></div>
-    </div>
-  </section>
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
 
-  <!-- FEATURED WORKS -->
-  <section class="section" id="works">
-    <div class="section-header fade-in">
-      <div class="section-label">Selected Works</div>
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="featured-grid">
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#hero" class="nav-logo">QWHE</a>
+  <ul class="nav-links">
+    <li><a href="#featured">Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-      <a href="https://www.zcool.com.cn/work/ZNDgxNjc5NTY=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/feilong-duanwu.jpg" alt="飞龙在天·利见大人 — 百度端午高端礼盒包装" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">飞龙在天·利见大人 — 百度端午高端礼盒包装</div>
-          <div class="card-desc">Dragon-themed luxury gift box for Baidu Dragon Boat Festival</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#featured" class="mobile-link">Works</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="https://www.zcool.com.cn/u/346744" target="_blank" rel="noopener">ZCOOL</a>
+  <a href="https://www.behance.net/zhouyou" target="_blank" rel="noopener">Behance</a>
+</div>
 
-      <a href="https://www.zcool.com.cn/work/ZNDgxOTAxNDg=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/baidu-zhongqiu-xingxing.jpg" alt="百度中秋礼盒 — 中国行星探测联名度熊探测系列盲盒" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">百度中秋礼盒 — 中国行星探测联名度熊探测系列盲盒</div>
-          <div class="card-desc">Space exploration blind box series for Baidu Mid-Autumn Festival</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="gradient-1"></div>
+    <div class="gradient-2"></div>
+    <div class="gradient-3"></div>
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-name" id="heroName">QWHE</h1>
+    <p class="hero-subtitle" id="heroSubtitle">Brand Design &middot; Gift Packaging &middot; IP Derivatives</p>
+    <p class="hero-tagline">Based in Beijing, China</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="chevron"></div>
+  </div>
+</section>
 
-      <a href="https://www.zcool.com.cn/work/ZNDQ0NTE3ODQ=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/ant-financial.jpg" alt="蚂蚁金服商务创意摆件" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Creative Products</div>
-          <div class="card-title">蚂蚁金服商务创意摆件</div>
-          <div class="card-desc">Creative desk ornament design for Ant Financial</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
+<!-- Featured Works -->
+<section class="section" id="featured">
+  <div class="section-header reveal">
+    <div class="section-line"></div>
+    <h2 class="section-title">Featured Works</h2>
+  </div>
+  <div class="featured-grid">
 
-    </div>
-  </section>
-
-  <!-- ALL WORKS GRID -->
-  <section class="section">
-    <div class="section-header fade-in">
-      <div class="section-label">Portfolio</div>
-      <h2 class="section-title">All Projects</h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="works-grid">
-
-      <a href="https://www.zcool.com.cn/work/ZNDQ0NTIwMTI=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/bytedance-duanwu.jpg" alt="字节范端午主题衍生品" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">IP Derivatives</div>
-          <div class="card-title">字节范端午主题衍生品</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZNDMxNjk2MDg=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/tencent-q2.jpg" alt="腾讯19Q2季度产品" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Creative Products</div>
-          <div class="card-title">腾讯19Q2季度产品</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZNDMwODgzNTY=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/ziru-newyear.jpg" alt="自如2020年新年礼品" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">自如2020年新年礼品</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZNDE5NTM0MDg=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/sogou-translate.jpg" alt="搜狗翻译宝礼盒" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">搜狗翻译宝礼盒</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZMzIxMjE3NzY=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/didi-incense.jpg" alt="滴滴香插礼品设计" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Creative Products</div>
-          <div class="card-title">滴滴香插礼品设计</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZMzAzNjc3Mjg=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/duxiaoman-zhongqiu.jpg" alt="度小满金融中秋员工礼品" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">度小满金融中秋员工礼品</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZMjQzODExODQ=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/wangzherongyao.jpg" alt="王者荣耀周边衍生" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">IP Derivatives</div>
-          <div class="card-title">王者荣耀周边衍生</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZMjU5OTE0Mjg=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/baidu-newyear.jpg" alt="百度新年礼包" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">百度新年礼包</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-      <a href="https://www.zcool.com.cn/work/ZMjYzOTA0MjQ=.html" target="_blank" class="project-card fade-in">
-        <img class="card-image" src="images/vr-glasses.jpg" alt="VR眼镜盒包装" loading="lazy">
-        <div class="card-overlay">
-          <div class="card-tag">Packaging Design</div>
-          <div class="card-title">VR眼镜盒包装</div>
-        </div>
-        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="section-header fade-in">
-      <div class="section-label">About</div>
-      <h2 class="section-title">Designer Profile</h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="about-content">
-      <div class="about-text fade-in">
-        <p>Based in Beijing, I am a multidisciplinary designer specializing in brand gift packaging, IP derivatives, and H5 interactive design. With years of experience collaborating with leading technology companies, I transform brand stories into tangible, memorable experiences through thoughtful packaging and product design.</p>
-        <p>My work spans from concept development to final production, covering the full spectrum of brand merchandise — from premium festival gift boxes to creative desk ornaments and gaming IP collectibles. Every project begins with understanding the brand's DNA and ends with a product that resonates emotionally with its audience.</p>
-        <div class="specialties">
-          <span class="specialty-tag">Brand Gift Packaging</span>
-          <span class="specialty-tag">IP Derivatives</span>
-          <span class="specialty-tag">H5 Interactive Design</span>
-          <span class="specialty-tag">Creative Products</span>
-          <span class="specialty-tag">Festival Merchandise</span>
-        </div>
+    <a href="projects/feilong-duanwu.html" class="featured-card reveal reveal-delay-1">
+      <img class="card-image" src="images/feilong-duanwu.jpg" alt="飞龙在天·利见大人" loading="lazy">
+      <div class="card-overlay">
+        <div class="card-category">Packaging Design</div>
+        <h3 class="card-title">飞龙在天·利见大人</h3>
+        <p class="card-subtitle">百度端午高端礼盒包装</p>
+        <span class="card-link">View Project <span class="arrow">&rarr;</span></span>
       </div>
-      <div class="about-details fade-in">
-        <div class="detail-item">
-          <div class="detail-label">Name</div>
-          <div class="detail-value">QWHE (周游 / Zhou You)</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Location</div>
-          <div class="detail-value">Beijing, China</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Email</div>
-          <div class="detail-value"><a href="mailto:qwhe@foxmail.com">qwhe@foxmail.com</a></div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">ZCOOL</div>
-          <div class="detail-value"><a href="https://www.zcool.com.cn/u/346744" target="_blank">zcool.com.cn/u/346744</a></div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Behance</div>
-          <div class="detail-value"><a href="https://www.behance.net/zhouyou" target="_blank">behance.net/zhouyou</a></div>
-        </div>
+    </a>
+
+    <a href="projects/baidu-zhongqiu-xingxing.html" class="featured-card reveal reveal-delay-2">
+      <img class="card-image" src="images/baidu-zhongqiu-xingxing.jpg" alt="行星探测联名盲盒" loading="lazy">
+      <div class="card-overlay">
+        <div class="card-category">Packaging Design</div>
+        <h3 class="card-title">行星探测联名盲盒</h3>
+        <p class="card-subtitle">百度中秋礼盒 · 中国行星探测联名</p>
+        <span class="card-link">View Project <span class="arrow">&rarr;</span></span>
+      </div>
+    </a>
+
+    <a href="projects/ant-financial.html" class="featured-card reveal reveal-delay-3">
+      <img class="card-image" src="images/ant-financial.jpg" alt="商务创意摆件" loading="lazy">
+      <div class="card-overlay">
+        <div class="card-category">Creative Products</div>
+        <h3 class="card-title">商务创意摆件</h3>
+        <p class="card-subtitle">蚂蚁金服品牌衍生品设计</p>
+        <span class="card-link">View Project <span class="arrow">&rarr;</span></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- All Works Grid -->
+<section class="section" id="works">
+  <div class="section-header reveal">
+    <div class="section-line"></div>
+    <h2 class="section-title">All Works</h2>
+  </div>
+  <div class="works-grid">
+
+    <a href="projects/bytedance-duanwu.html" class="work-card reveal reveal-delay-1">
+      <img class="card-image" src="images/bytedance-duanwu.jpg" alt="字节范端午衍生品" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">IP Derivatives</span>
+        <h3 class="card-title">字节范端午衍生品</h3>
+        <p class="card-client">ByteDance &middot; 2020</p>
+      </div>
+    </a>
+
+    <a href="projects/tencent-q2.html" class="work-card reveal reveal-delay-2">
+      <img class="card-image" src="images/tencent-q2.jpg" alt="季度创意产品" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Creative Products</span>
+        <h3 class="card-title">季度创意产品</h3>
+        <p class="card-client">Tencent &middot; 2019</p>
+      </div>
+    </a>
+
+    <a href="projects/ziru-newyear.html" class="work-card reveal reveal-delay-3">
+      <img class="card-image" src="images/ziru-newyear.jpg" alt="新年礼品设计" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Packaging Design</span>
+        <h3 class="card-title">新年礼品设计</h3>
+        <p class="card-client">Ziroom &middot; 2020</p>
+      </div>
+    </a>
+
+    <a href="projects/sogou-translate.html" class="work-card reveal reveal-delay-4">
+      <img class="card-image" src="images/sogou-translate.jpg" alt="翻译宝礼盒" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Packaging Design</span>
+        <h3 class="card-title">翻译宝礼盒</h3>
+        <p class="card-client">Sogou &middot; 2019</p>
+      </div>
+    </a>
+
+    <a href="projects/didi-incense.html" class="work-card reveal reveal-delay-5">
+      <img class="card-image" src="images/didi-incense.jpg" alt="香插礼品设计" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Creative Products</span>
+        <h3 class="card-title">香插礼品设计</h3>
+        <p class="card-client">Didi &middot; 2019</p>
+      </div>
+    </a>
+
+    <a href="projects/duxiaoman-zhongqiu.html" class="work-card reveal reveal-delay-6">
+      <img class="card-image" src="images/duxiaoman-zhongqiu.jpg" alt="中秋员工礼品" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Packaging Design</span>
+        <h3 class="card-title">中秋员工礼品</h3>
+        <p class="card-client">DuXiaoMan &middot; 2019</p>
+      </div>
+    </a>
+
+    <a href="projects/wangzherongyao.html" class="work-card reveal reveal-delay-7">
+      <img class="card-image" src="images/wangzherongyao.jpg" alt="王者荣耀周边" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">IP Derivatives</span>
+        <h3 class="card-title">王者荣耀周边</h3>
+        <p class="card-client">Tencent Games &middot; 2019</p>
+      </div>
+    </a>
+
+    <a href="projects/baidu-newyear.html" class="work-card reveal reveal-delay-8">
+      <img class="card-image" src="images/baidu-newyear.jpg" alt="新年礼包" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Packaging Design</span>
+        <h3 class="card-title">新年礼包</h3>
+        <p class="card-client">Baidu &middot; 2019</p>
+      </div>
+    </a>
+
+    <a href="projects/vr-glasses.html" class="work-card reveal reveal-delay-9">
+      <img class="card-image" src="images/vr-glasses.jpg" alt="VR眼镜包装" loading="lazy">
+      <div class="card-border"></div>
+      <div class="card-info">
+        <span class="card-tag">Packaging Design</span>
+        <h3 class="card-title">VR眼镜包装</h3>
+        <p class="card-client">&mdash; &middot; 2018</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+  <div class="section-header reveal">
+    <div class="section-line"></div>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2>Designing <span class="accent">meaningful</span> brand experiences</h2>
+      <p>我是周游 (QWHE)，一名驻扎在北京的品牌设计师。专注于品牌礼品包装设计、IP衍生品开发以及H5互动设计，致力于将品牌理念转化为有温度的实体体验。</p>
+      <p>曾服务于百度、蚂蚁金服、腾讯、字节跳动、滴滴等一线互联网公司，为品牌打造从概念到落地的完整设计解决方案。</p>
+    </div>
+    <div class="about-stats reveal reveal-delay-2">
+      <div class="stat-item">
+        <div class="stat-number" data-target="50">0</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="10">0</div>
+        <div class="stat-label">Brand Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" data-target="6">0</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="clients-tags">
+        <span class="client-tag">Baidu</span>
+        <span class="client-tag">Ant Financial</span>
+        <span class="client-tag">Tencent</span>
+        <span class="client-tag">ByteDance</span>
+        <span class="client-tag">Didi</span>
+        <span class="client-tag">Sogou</span>
+        <span class="client-tag">Ziroom</span>
+        <span class="client-tag">DuXiaoMan</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT / FOOTER -->
-  <section class="contact" id="contact">
-    <div class="fade-in">
-      <h2 class="contact-heading">Let's Work Together</h2>
-      <p class="contact-email"><a href="mailto:qwhe@foxmail.com">qwhe@foxmail.com</a></p>
-      <div class="social-links">
-        <a href="https://www.zcool.com.cn/u/346744" target="_blank" class="social-link">ZCOOL</a>
-        <a href="https://www.behance.net/zhouyou" target="_blank" class="social-link">Behance</a>
-      </div>
-    </div>
-  </section>
-  <footer class="footer">
-    &copy; 2025 QWHE (Zhou You). All rights reserved.
-  </footer>
+<!-- Contact / Footer -->
+<section class="contact" id="contact">
+  <h2 class="contact-heading reveal">Let's Connect</h2>
+  <div class="contact-links reveal reveal-delay-1">
+    <a href="mailto:qwhe@foxmail.com" class="contact-link">qwhe@foxmail.com</a>
+    <a href="https://www.zcool.com.cn/u/346744" target="_blank" rel="noopener" class="contact-link">ZCOOL</a>
+    <a href="https://www.behance.net/zhouyou" target="_blank" rel="noopener" class="contact-link">Behance</a>
+  </div>
+</section>
 
-  <script>
-    // Nav scroll effect
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 50);
+<footer class="footer">
+  <p>&copy; 2024 QWHE (周游). All rights reserved.</p>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ===== Loader ===== */
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('loader').classList.add('hidden');
+    }, 600);
+  });
+
+  /* ===== Custom Cursor ===== */
+  var cursor = document.getElementById('cursor');
+  var cursorDot = document.getElementById('cursorDot');
+  var mouseX = 0, mouseY = 0;
+  var cursorX = 0, cursorY = 0;
+  var dotX = 0, dotY = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dotX = e.clientX;
+    dotY = e.clientY;
+  });
+
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.12;
+    cursorY += (mouseY - cursorY) * 0.12;
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+    cursorDot.style.left = dotX + 'px';
+    cursorDot.style.top = dotY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  var hoverTargets = document.querySelectorAll('a, button, .work-card, .featured-card');
+  hoverTargets.forEach(function(el) {
+    el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+    el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+  });
+
+  /* ===== Hero Text Animation ===== */
+  var heroName = document.getElementById('heroName');
+  var nameText = heroName.textContent;
+  heroName.innerHTML = '';
+  for (var i = 0; i < nameText.length; i++) {
+    var span = document.createElement('span');
+    span.className = 'letter';
+    span.textContent = nameText[i] === ' ' ? '\u00A0' : nameText[i];
+    span.style.animationDelay = (0.3 + i * 0.08) + 's';
+    heroName.appendChild(span);
+  }
+
+  var heroSubtitle = document.getElementById('heroSubtitle');
+  var subText = heroSubtitle.textContent;
+  heroSubtitle.innerHTML = '';
+  var words = subText.split(' ');
+  words.forEach(function(word, idx) {
+    var span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = word + ' ';
+    span.style.animationDelay = (0.8 + idx * 0.12) + 's';
+    heroSubtitle.appendChild(span);
+  });
+
+  /* ===== Mouse Parallax on Hero ===== */
+  var hero = document.querySelector('.hero');
+  var heroContent = document.querySelector('.hero-content');
+  hero.addEventListener('mousemove', function(e) {
+    var rect = hero.getBoundingClientRect();
+    var x = (e.clientX - rect.left) / rect.width - 0.5;
+    var y = (e.clientY - rect.top) / rect.height - 0.5;
+    heroContent.style.transform = 'translate(' + (x * -15) + 'px, ' + (y * -10) + 'px)';
+  });
+  hero.addEventListener('mouseleave', function() {
+    heroContent.style.transform = 'translate(0, 0)';
+    heroContent.style.transition = 'transform 0.5s ease-out';
+    setTimeout(function() { heroContent.style.transition = ''; }, 500);
+  });
+
+  /* ===== Hamburger Menu ===== */
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
     });
+  });
 
-    // Mobile nav toggle
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('active');
-      navLinks.classList.toggle('open');
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navLinks.classList.remove('open');
-      });
-    });
+  /* ===== Nav Hide on Scroll ===== */
+  var nav = document.getElementById('nav');
+  var lastScroll = 0;
+  window.addEventListener('scroll', function() {
+    var currentScroll = window.pageYOffset;
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      nav.classList.add('hidden');
+    } else {
+      nav.classList.remove('hidden');
+    }
+    lastScroll = currentScroll;
+  }, { passive: true });
 
-    // Intersection Observer fade-in
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+  /* ===== Scroll Reveal (Intersection Observer) ===== */
+  var reveals = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(function(el) { revealObserver.observe(el); });
+
+  /* ===== Parallax on Featured Cards ===== */
+  var featuredCards = document.querySelectorAll('.featured-card');
+  featuredCards.forEach(function(card) {
+    var img = card.querySelector('.card-image');
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      img.style.transform = 'scale(1.05) translate(' + (x * -10) + 'px, ' + (y * -10) + 'px)';
+    });
+    card.addEventListener('mouseleave', function() {
+      img.style.transform = '';
+    });
+  });
+
+  /* ===== Scroll Parallax for Featured Images ===== */
+  window.addEventListener('scroll', function() {
+    featuredCards.forEach(function(card) {
+      var rect = card.getBoundingClientRect();
+      var windowHeight = window.innerHeight;
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        var progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+        var img = card.querySelector('.card-image');
+        var yOffset = (progress - 0.5) * 40;
+        img.style.transform = 'translateY(' + yOffset + 'px)';
+      }
+    });
+  }, { passive: true });
+
+  /* ===== Counter Animation ===== */
+  var statNumbers = document.querySelectorAll('.stat-number[data-target]');
+  var counterObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var target = parseInt(el.getAttribute('data-target'));
+        var duration = 2000;
+        var start = 0;
+        var startTime = null;
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(eased * target) + '+';
+          if (progress < 1) requestAnimationFrame(step);
         }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    fadeEls.forEach(el => observer.observe(el));
-  </script>
+        requestAnimationFrame(step);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statNumbers.forEach(function(el) { counterObserver.observe(el); });
+
+  /* ===== Magnetic Buttons ===== */
+  var magneticEls = document.querySelectorAll('.contact-link, .nav-links a');
+  magneticEls.forEach(function(el) {
+    el.addEventListener('mousemove', function(e) {
+      var rect = el.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = 'translate(' + (x * 0.2) + 'px, ' + (y * 0.2) + 'px)';
+    });
+    el.addEventListener('mouseleave', function() {
+      el.style.transform = '';
+      el.style.transition = 'transform 0.4s var(--ease-out-expo)';
+      setTimeout(function() { el.style.transition = ''; }, 400);
+    });
+  });
+
+  /* ===== Smooth Scroll for Anchor Links ===== */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
