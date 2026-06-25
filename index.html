@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QWHE - Brand Gift Packaging &amp; IP Design</title>
+  <meta name="description" content="QWHE (Zhou You) - Brand gift packaging design, IP derivatives, H5 interactive design portfolio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    ::selection { background: #c8a97e; color: #0a0a0a; }
+
+    /* ========== NAV ========== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(200,169,126,0.1);
+      transition: all 0.4s ease;
+    }
+    .nav.scrolled { padding: 0.75rem 2rem; background: rgba(10,10,10,0.95); }
+    .nav-logo {
+      font-size: 1.25rem; font-weight: 700; letter-spacing: 0.15em;
+      color: #c8a97e;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #999;
+      transition: color 0.3s ease; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: #c8a97e;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: #c8a97e; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: #c8a97e; transition: all 0.3s ease; }
+    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 2rem; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(200,169,126,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: #c8a97e; margin-bottom: 1.5rem; opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 7rem); font-weight: 700;
+      line-height: 1.05; letter-spacing: -0.02em; color: #fff;
+      opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .hero h1 .accent { color: #c8a97e; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem); color: #888;
+      margin-top: 1.5rem; max-width: 600px; font-weight: 300;
+      opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+    .hero-location {
+      font-size: 0.85rem; color: #666; margin-top: 0.75rem;
+      opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeUp 0.8s ease 1s forwards;
+    }
+    .hero-scroll span { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #555; }
+    .hero-scroll-line {
+      width: 1px; height: 40px; background: linear-gradient(to bottom, #c8a97e, transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+    }
+
+    /* ========== SECTION COMMON ========== */
+    .section {
+      padding: 6rem 2rem; max-width: 1400px; margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #c8a97e; margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600;
+      color: #fff; letter-spacing: -0.01em;
+    }
+    .section-divider {
+      width: 60px; height: 2px; background: #c8a97e; margin-top: 1rem;
+    }
+
+    /* ========== FEATURED WORKS ========== */
+    .featured-grid {
+      display: grid; grid-template-columns: 1fr; gap: 2rem;
+    }
+    @media (min-width: 768px) {
+      .featured-grid { grid-template-columns: 1fr 1fr; }
+      .featured-grid .project-card:first-child { grid-column: 1 / -1; }
+    }
+    .project-card {
+      position: relative; overflow: hidden; border-radius: 12px;
+      cursor: pointer; background: #111;
+    }
+    .project-card .card-image {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .project-card:hover .card-image { transform: scale(1.05); }
+    .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.3) 40%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 2rem; transition: background 0.4s ease;
+    }
+    .project-card:hover .card-overlay {
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 50%, rgba(200,169,126,0.05) 100%);
+    }
+    .card-tag {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: #c8a97e; margin-bottom: 0.5rem;
+    }
+    .card-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 600;
+      color: #fff; line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 0.85rem; color: #999; margin-top: 0.35rem;
+    }
+    .card-arrow {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid rgba(200,169,126,0.4);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translate(-10px, 10px);
+      transition: all 0.4s ease;
+    }
+    .project-card:hover .card-arrow { opacity: 1; transform: translate(0, 0); }
+    .card-arrow svg { width: 16px; height: 16px; stroke: #c8a97e; }
+
+    /* ========== ALL WORKS GRID ========== */
+    .works-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+    }
+    @media (min-width: 640px) { .works-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .works-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .works-grid .project-card .card-image { aspect-ratio: 4/3; }
+    .works-grid .card-title { font-size: clamp(1rem, 1.5vw, 1.15rem); }
+
+    /* ========== ABOUT ========== */
+    .about-content {
+      display: grid; grid-template-columns: 1fr; gap: 3rem;
+      align-items: start;
+    }
+    @media (min-width: 768px) { .about-content { grid-template-columns: 1fr 1fr; } }
+    .about-text p {
+      font-size: 1.05rem; color: #bbb; line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .about-text p:first-of-type::first-letter {
+      font-size: 3rem; font-weight: 700; color: #c8a97e;
+      float: left; line-height: 1; margin-right: 0.5rem; margin-top: 0.1rem;
+    }
+    .about-details { display: flex; flex-direction: column; gap: 1.5rem; }
+    .detail-item {
+      padding: 1.25rem; border-radius: 8px;
+      border: 1px solid rgba(200,169,126,0.15);
+      background: rgba(200,169,126,0.03);
+    }
+    .detail-label {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #c8a97e; margin-bottom: 0.5rem;
+    }
+    .detail-value { font-size: 0.95rem; color: #ddd; }
+    .detail-value a { color: #c8a97e; transition: opacity 0.3s; }
+    .detail-value a:hover { opacity: 0.7; }
+    .specialties {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;
+    }
+    .specialty-tag {
+      font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 20px;
+      border: 1px solid rgba(200,169,126,0.25); color: #c8a97e;
+      background: rgba(200,169,126,0.05);
+    }
+
+    /* ========== CONTACT / FOOTER ========== */
+    .contact {
+      text-align: center; padding: 5rem 2rem;
+      border-top: 1px solid rgba(200,169,126,0.1);
+    }
+    .contact-heading {
+      font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 600;
+      color: #fff; margin-bottom: 1rem;
+    }
+    .contact-email {
+      font-size: 1.1rem; color: #c8a97e; margin-bottom: 2rem;
+    }
+    .contact-email a { border-bottom: 1px solid rgba(200,169,126,0.3); transition: border-color 0.3s; }
+    .contact-email a:hover { border-color: #c8a97e; }
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; }
+    .social-link {
+      font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #888; padding: 0.6rem 1.2rem; border: 1px solid #333;
+      border-radius: 6px; transition: all 0.3s ease;
+    }
+    .social-link:hover { color: #c8a97e; border-color: #c8a97e; }
+    .footer {
+      text-align: center; padding: 2rem;
+      font-size: 0.75rem; color: #444; letter-spacing: 0.05em;
+    }
+
+    /* ========== FADE IN ANIMATION ========== */
+    .fade-in {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 767px) {
+      .nav { padding: 1rem 1.25rem; }
+      .nav-links {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(10,10,10,0.98); backdrop-filter: blur(20px);
+        flex-direction: column; align-items: center; justify-content: center;
+        gap: 2.5rem; opacity: 0; pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      .nav-links.open { opacity: 1; pointer-events: all; }
+      .nav-links a { font-size: 1.1rem; }
+      .nav-toggle { display: flex; z-index: 1001; }
+      .section { padding: 4rem 1.25rem; }
+      .card-overlay { padding: 1.25rem; }
+      .hero { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo">QWHE</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#works">Works</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-label">Brand &amp; Packaging Designer</div>
+    <h1>QWHE<span class="accent">.</span></h1>
+    <p class="hero-sub">Brand gift packaging design, IP derivatives, and H5 interactive design. Crafting meaningful brand experiences through thoughtful design.</p>
+    <p class="hero-location">Beijing, China</p>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORKS -->
+  <section class="section" id="works">
+    <div class="section-header fade-in">
+      <div class="section-label">Selected Works</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="featured-grid">
+
+      <a href="https://www.zcool.com.cn/work/ZNDgxNjc5NTY=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/feilong-duanwu.jpg" alt="飞龙在天·利见大人 — 百度端午高端礼盒包装" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">飞龙在天·利见大人 — 百度端午高端礼盒包装</div>
+          <div class="card-desc">Dragon-themed luxury gift box for Baidu Dragon Boat Festival</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZNDgxOTAxNDg=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/baidu-zhongqiu-xingxing.jpg" alt="百度中秋礼盒 — 中国行星探测联名度熊探测系列盲盒" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">百度中秋礼盒 — 中国行星探测联名度熊探测系列盲盒</div>
+          <div class="card-desc">Space exploration blind box series for Baidu Mid-Autumn Festival</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZNDQ0NTE3ODQ=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/ant-financial.jpg" alt="蚂蚁金服商务创意摆件" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Creative Products</div>
+          <div class="card-title">蚂蚁金服商务创意摆件</div>
+          <div class="card-desc">Creative desk ornament design for Ant Financial</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ALL WORKS GRID -->
+  <section class="section">
+    <div class="section-header fade-in">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">All Projects</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="works-grid">
+
+      <a href="https://www.zcool.com.cn/work/ZNDQ0NTIwMTI=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/bytedance-duanwu.jpg" alt="字节范端午主题衍生品" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">IP Derivatives</div>
+          <div class="card-title">字节范端午主题衍生品</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZNDMxNjk2MDg=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/tencent-q2.jpg" alt="腾讯19Q2季度产品" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Creative Products</div>
+          <div class="card-title">腾讯19Q2季度产品</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZNDMwODgzNTY=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/ziru-newyear.jpg" alt="自如2020年新年礼品" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">自如2020年新年礼品</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZNDE5NTM0MDg=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/sogou-translate.jpg" alt="搜狗翻译宝礼盒" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">搜狗翻译宝礼盒</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZMzIxMjE3NzY=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/didi-incense.jpg" alt="滴滴香插礼品设计" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Creative Products</div>
+          <div class="card-title">滴滴香插礼品设计</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZMzAzNjc3Mjg=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/duxiaoman-zhongqiu.jpg" alt="度小满金融中秋员工礼品" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">度小满金融中秋员工礼品</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZMjQzODExODQ=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/wangzherongyao.jpg" alt="王者荣耀周边衍生" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">IP Derivatives</div>
+          <div class="card-title">王者荣耀周边衍生</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZMjU5OTE0Mjg=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/baidu-newyear.jpg" alt="百度新年礼包" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">百度新年礼包</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+      <a href="https://www.zcool.com.cn/work/ZMjYzOTA0MjQ=.html" target="_blank" class="project-card fade-in">
+        <img class="card-image" src="images/vr-glasses.jpg" alt="VR眼镜盒包装" loading="lazy">
+        <div class="card-overlay">
+          <div class="card-tag">Packaging Design</div>
+          <div class="card-title">VR眼镜盒包装</div>
+        </div>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-header fade-in">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Designer Profile</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-content">
+      <div class="about-text fade-in">
+        <p>Based in Beijing, I am a multidisciplinary designer specializing in brand gift packaging, IP derivatives, and H5 interactive design. With years of experience collaborating with leading technology companies, I transform brand stories into tangible, memorable experiences through thoughtful packaging and product design.</p>
+        <p>My work spans from concept development to final production, covering the full spectrum of brand merchandise — from premium festival gift boxes to creative desk ornaments and gaming IP collectibles. Every project begins with understanding the brand's DNA and ends with a product that resonates emotionally with its audience.</p>
+        <div class="specialties">
+          <span class="specialty-tag">Brand Gift Packaging</span>
+          <span class="specialty-tag">IP Derivatives</span>
+          <span class="specialty-tag">H5 Interactive Design</span>
+          <span class="specialty-tag">Creative Products</span>
+          <span class="specialty-tag">Festival Merchandise</span>
+        </div>
+      </div>
+      <div class="about-details fade-in">
+        <div class="detail-item">
+          <div class="detail-label">Name</div>
+          <div class="detail-value">QWHE (周游 / Zhou You)</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Location</div>
+          <div class="detail-value">Beijing, China</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Email</div>
+          <div class="detail-value"><a href="mailto:qwhe@foxmail.com">qwhe@foxmail.com</a></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">ZCOOL</div>
+          <div class="detail-value"><a href="https://www.zcool.com.cn/u/346744" target="_blank">zcool.com.cn/u/346744</a></div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Behance</div>
+          <div class="detail-value"><a href="https://www.behance.net/zhouyou" target="_blank">behance.net/zhouyou</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / FOOTER -->
+  <section class="contact" id="contact">
+    <div class="fade-in">
+      <h2 class="contact-heading">Let's Work Together</h2>
+      <p class="contact-email"><a href="mailto:qwhe@foxmail.com">qwhe@foxmail.com</a></p>
+      <div class="social-links">
+        <a href="https://www.zcool.com.cn/u/346744" target="_blank" class="social-link">ZCOOL</a>
+        <a href="https://www.behance.net/zhouyou" target="_blank" class="social-link">Behance</a>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    &copy; 2025 QWHE (Zhou You). All rights reserved.
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Intersection Observer fade-in
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
