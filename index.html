@@ -13,9 +13,9 @@
 :root {
   --bg: #0a0a0a;
   --bg-elevated: #111111;
-  --fg: #f5f0eb;
+  --fg: #f5f0e8;
   --fg-muted: #8a8580;
-  --accent: #c8a97e;
+  --accent: #c9a96e;
   --accent-light: #e0c9a6;
   --accent-dark: #a08050;
   --card-bg: #151515;
@@ -73,7 +73,7 @@ body::before {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  opacity: 0.035;
+  opacity: 0.03;
   pointer-events: none;
   z-index: 9999;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -91,7 +91,7 @@ body::before {
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  transition: opacity 0.6s var(--ease-out-expo), visibility 0.6s;
+  transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s;
 }
 
 .loader.hidden {
@@ -113,7 +113,7 @@ body::before {
   50% { opacity: 1; }
 }
 
-/* ========== Custom Cursor ========== */
+/* ========== Custom Cursor with Trail ========== */
 .cursor {
   position: fixed;
   width: 8px;
@@ -123,15 +123,15 @@ body::before {
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background 0.3s;
+  transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background 0.3s, border 0.3s;
   mix-blend-mode: difference;
 }
 
 .cursor.hover {
-  width: 40px;
-  height: 40px;
-  background: rgba(200, 169, 126, 0.15);
-  border: 1px solid var(--accent);
+  width: 48px;
+  height: 48px;
+  background: rgba(200, 169, 126, 0.12);
+  border: 1.5px solid var(--accent);
 }
 
 .cursor-dot {
@@ -145,6 +145,19 @@ body::before {
   transform: translate(-50%, -50%);
 }
 
+.cursor-trail {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
 /* ========== Navigation ========== */
 .nav {
   position: fixed;
@@ -154,11 +167,15 @@ body::before {
   align-items: center;
   justify-content: space-between;
   z-index: 1000;
-  background: rgba(10, 10, 10, 0.6);
+  background: rgba(10, 10, 10, 0.5);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(200, 169, 126, 0.08);
-  transition: transform 0.4s var(--ease-out-expo);
+  border-bottom: 1px solid rgba(200, 169, 126, 0.06);
+  transition: transform 0.4s var(--ease-out-expo), background 0.3s;
+}
+
+.nav.scrolled {
+  background: rgba(10, 10, 10, 0.85);
 }
 
 .nav.hidden { transform: translateY(-100%); }
@@ -281,108 +298,131 @@ body::before {
   padding: 2rem;
 }
 
-.hero-bg {
+#particleCanvas {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 0;
 }
 
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .hero-bg .gradient-1 {
   position: absolute;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(200, 169, 126, 0.08) 0%, transparent 70%);
-  top: -10%; right: -5%;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+  top: -15%; right: -10%;
   animation: floatGradient1 20s ease-in-out infinite;
 }
 
 .hero-bg .gradient-2 {
   position: absolute;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(200, 169, 126, 0.05) 0%, transparent 70%);
-  bottom: -10%; left: -5%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, transparent 70%);
+  bottom: -15%; left: -10%;
   animation: floatGradient2 25s ease-in-out infinite;
 }
 
 .hero-bg .gradient-3 {
   position: absolute;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(160, 128, 80, 0.06) 0%, transparent 70%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(160, 128, 80, 0.08) 0%, transparent 70%);
   top: 40%; left: 30%;
   animation: floatGradient3 18s ease-in-out infinite;
 }
 
 @keyframes floatGradient1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-50px, 30px) scale(1.1); }
-  66% { transform: translate(30px, -20px) scale(0.95); }
+  33% { transform: translate(-60px, 40px) scale(1.15); }
+  66% { transform: translate(40px, -30px) scale(0.9); }
 }
 
 @keyframes floatGradient2 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(40px, -30px) scale(1.05); }
-  66% { transform: translate(-30px, 20px) scale(1.1); }
+  33% { transform: translate(50px, -40px) scale(1.1); }
+  66% { transform: translate(-40px, 30px) scale(1.15); }
 }
 
 @keyframes floatGradient3 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-20px, -40px) scale(1.15); }
+  50% { transform: translate(-30px, -50px) scale(1.2); }
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   text-align: center;
+  will-change: transform;
 }
 
 .hero-name {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 12vw, 10rem);
+  font-size: clamp(4rem, 14vw, 12rem);
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   color: var(--fg);
   line-height: 1;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   overflow: hidden;
 }
 
 .hero-name .letter {
   display: inline-block;
   opacity: 0;
-  transform: translateY(100%);
-  animation: letterReveal 0.8s var(--ease-out-expo) forwards;
+  transform: translateY(120%) rotateX(-40deg);
+  animation: letterBounceIn 0.9s var(--ease-out-expo) forwards;
 }
 
-@keyframes letterReveal {
-  to { opacity: 1; transform: translateY(0); }
+@keyframes letterBounceIn {
+  0% { opacity: 0; transform: translateY(120%) rotateX(-40deg); }
+  60% { opacity: 1; transform: translateY(-8%) rotateX(5deg); }
+  80% { transform: translateY(3%) rotateX(-2deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0); }
 }
 
 .hero-subtitle {
-  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.8vw, 1.15rem);
   font-weight: 300;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.35em;
   color: var(--fg-muted);
+  min-height: 1.8em;
   overflow: hidden;
 }
 
-.hero-subtitle .word {
+.hero-subtitle .typewriter-cursor {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: wordReveal 0.6s var(--ease-out-expo) forwards;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.8s step-end infinite;
 }
 
-@keyframes wordReveal {
-  to { opacity: 1; transform: translateY(0); }
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .hero-tagline {
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   font-size: 0.85rem;
   color: var(--accent);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   opacity: 0;
-  animation: fadeIn 1s var(--ease-out-expo) 1.5s forwards;
+  animation: fadeInUp 1s var(--ease-out-expo) 2.5s forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
@@ -399,13 +439,14 @@ body::before {
   align-items: center;
   gap: 0.5rem;
   opacity: 0;
-  animation: fadeIn 1s var(--ease-out-expo) 2s forwards;
+  animation: fadeIn 1s var(--ease-out-expo) 3s forwards;
+  z-index: 1;
 }
 
 .scroll-indicator span {
   font-family: var(--font-display);
   font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   color: var(--fg-muted);
   text-transform: uppercase;
 }
@@ -421,13 +462,13 @@ body::before {
 
 @keyframes bounceChevron {
   0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
-  40% { transform: rotate(45deg) translateY(6px); }
-  60% { transform: rotate(45deg) translateY(3px); }
+  40% { transform: rotate(45deg) translateY(8px); }
+  60% { transform: rotate(45deg) translateY(4px); }
 }
 
 /* ========== Section Common ========== */
 .section {
-  padding: 6rem 2.5rem;
+  padding: 7rem 2.5rem;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -454,118 +495,215 @@ body::before {
   color: var(--fg-muted);
 }
 
-/* ========== Featured Works ========== */
-.featured-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.featured-card {
-  position: relative;
-  height: 70vh;
-  min-height: 500px;
-  border-radius: 12px;
+/* ========== Featured Works - Full Width Horizontal Carousel ========== */
+.featured-section {
+  padding: 0;
+  max-width: none;
   overflow: hidden;
-  cursor: none;
 }
 
-.featured-card .card-image {
+.featured-section .section-header {
+  max-width: 1400px;
+  margin: 7rem auto 2.5rem;
+  padding: 0 2.5rem;
+}
+
+.featured-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.featured-carousel {
+  display: flex;
+  transition: transform 0.8s var(--ease-out-expo);
+  will-change: transform;
+  cursor: grab;
+}
+
+.featured-carousel.dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.featured-slide {
+  min-width: 100vw;
+  width: 100vw;
+  height: 80vh;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.featured-slide .slide-image {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 0.8s var(--ease-out-expo);
+  transition: transform 0.6s var(--ease-out-expo);
   will-change: transform;
 }
 
-.featured-card:hover .card-image {
-  transform: scale(1.05);
+.featured-slide .slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.2) 50%, rgba(10,10,10,0.7) 100%);
+  z-index: 1;
 }
 
-.featured-card .card-overlay {
+.featured-slide .slide-content {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 3rem;
-  background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
-  transform: translateY(60px);
-  transition: transform 0.6s var(--ease-out-expo);
+  padding: 4rem 5rem;
+  z-index: 2;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo);
 }
 
-.featured-card:hover .card-overlay {
+.featured-slide.active .slide-content {
   transform: translateY(0);
+  opacity: 1;
 }
 
-.featured-card .card-category {
+.featured-slide .slide-category {
   font-family: var(--font-display);
   font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
-.featured-card .card-title {
+.featured-slide .slide-title {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 600;
   color: var(--fg);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
-.featured-card .card-subtitle {
-  font-size: 0.9rem;
-  color: var(--fg-muted);
-  margin-bottom: 1rem;
+.featured-slide .slide-subtitle {
+  font-size: 1rem;
+  color: rgba(245, 240, 232, 0.7);
+  margin-bottom: 1.5rem;
+  max-width: 600px;
 }
 
-.featured-card .card-link {
+.featured-slide .slide-link {
   font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
   color: var(--accent);
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   transition: gap 0.3s var(--ease-out-expo);
 }
 
-.featured-card:hover .card-link { gap: 1rem; }
+.featured-slide .slide-link:hover { gap: 1.2rem; }
 
-.featured-card .card-link .arrow {
+.featured-slide .slide-link .arrow {
   transition: transform 0.3s var(--ease-out-expo);
 }
 
-.featured-card:hover .card-link .arrow {
+.featured-slide .slide-link:hover .arrow {
   transform: translateX(4px);
 }
 
-/* ========== All Works Grid ========== */
-.works-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+/* Carousel Controls */
+.featured-controls {
+  position: absolute;
+  bottom: 4rem;
+  right: 5rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.featured-dots {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.featured-dot {
+  width: 32px;
+  height: 3px;
+  background: rgba(245, 240, 232, 0.25);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.4s, width 0.4s var(--ease-out-expo);
+}
+
+.featured-dot.active {
+  background: var(--accent);
+  width: 56px;
+}
+
+.featured-nav-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.4);
+  backdrop-filter: blur(10px);
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.featured-nav-btn:hover {
+  border-color: var(--accent);
+  background: rgba(201, 169, 110, 0.15);
+}
+
+.featured-counter {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+  margin-left: 0.5rem;
+}
+
+.featured-counter .current {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ========== All Works - Masonry Grid ========== */
+.works-masonry {
+  columns: 3;
+  column-gap: 1.5rem;
 }
 
 .work-card {
   position: relative;
   border-radius: 10px;
   overflow: hidden;
-  aspect-ratio: 4/3;
   cursor: none;
   background: var(--card-bg);
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
 }
 
 .work-card .card-image {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease-out-expo);
+  width: 100%;
+  display: block;
+  transition: transform 0.7s var(--ease-out-expo);
   will-change: transform;
 }
 
 .work-card:hover .card-image {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .work-card .card-border {
@@ -573,20 +711,30 @@ body::before {
   inset: 0;
   border: 1px solid transparent;
   border-radius: 10px;
-  transition: border-color 0.4s;
+  transition: border-color 0.4s, box-shadow 0.4s;
   pointer-events: none;
+  z-index: 2;
 }
 
 .work-card:hover .card-border {
   border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(200, 169, 126, 0.1);
+  box-shadow: 0 0 30px rgba(200, 169, 126, 0.1);
 }
 
 .work-card .card-info {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   padding: 1.5rem;
-  background: linear-gradient(transparent, rgba(10, 10, 10, 0.85));
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
+  z-index: 1;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.5s var(--ease-out-expo), opacity 0.5s var(--ease-out-expo);
+}
+
+.work-card:hover .card-info {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .work-card .card-tag {
@@ -597,7 +745,7 @@ body::before {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
-  background: rgba(200, 169, 126, 0.1);
+  background: rgba(200, 169, 126, 0.12);
   padding: 0.25rem 0.6rem;
   border-radius: 3px;
   margin-bottom: 0.5rem;
@@ -616,9 +764,17 @@ body::before {
   margin-top: 0.2rem;
 }
 
+.work-card .card-views {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--fg-muted);
+  margin-top: 0.3rem;
+  letter-spacing: 0.05em;
+}
+
 /* ========== About Section ========== */
 .about {
-  padding: 6rem 2.5rem;
+  padding: 7rem 2.5rem;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -626,7 +782,7 @@ body::before {
 .about-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 4rem;
+  gap: 5rem;
   align-items: start;
 }
 
@@ -643,7 +799,7 @@ body::before {
 
 .about-text p {
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.9;
   color: var(--fg-muted);
   margin-bottom: 1rem;
 }
@@ -661,7 +817,7 @@ body::before {
 
 .stat-number {
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: var(--accent);
   line-height: 1;
@@ -671,7 +827,7 @@ body::before {
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   color: var(--fg-muted);
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
 }
 
 .clients-tags {
@@ -700,7 +856,7 @@ body::before {
 
 /* ========== Contact / Footer ========== */
 .contact {
-  padding: 6rem 2.5rem;
+  padding: 7rem 2.5rem;
   max-width: 1400px;
   margin: 0 auto;
   text-align: center;
@@ -713,6 +869,15 @@ body::before {
   font-weight: 600;
   margin-bottom: 2rem;
   color: var(--fg);
+}
+
+.contact-subtext {
+  font-size: 1rem;
+  color: var(--fg-muted);
+  margin-bottom: 3rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .contact-links {
@@ -745,6 +910,39 @@ body::before {
 .contact-link:hover { color: var(--fg); }
 .contact-link:hover::after { width: 100%; }
 
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.social-link {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease-out-expo);
+}
+
+.social-link:hover {
+  border-color: var(--accent);
+  background: rgba(201, 169, 110, 0.1);
+  transform: translateY(-3px);
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--fg-muted);
+  transition: fill 0.3s;
+}
+
+.social-link:hover svg { fill: var(--accent); }
+
 .footer {
   padding: 2rem 2.5rem;
   text-align: center;
@@ -756,8 +954,8 @@ body::before {
 /* ========== Scroll Animations ========== */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transform: translateY(50px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
 }
 
 .reveal.visible {
@@ -765,42 +963,54 @@ body::before {
   transform: translateY(0);
 }
 
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
-.reveal-delay-6 { transition-delay: 0.6s; }
-.reveal-delay-7 { transition-delay: 0.7s; }
-.reveal-delay-8 { transition-delay: 0.8s; }
-.reveal-delay-9 { transition-delay: 0.9s; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+.reveal-delay-6 { transition-delay: 0.48s; }
+.reveal-delay-7 { transition-delay: 0.56s; }
+.reveal-delay-8 { transition-delay: 0.64s; }
+.reveal-delay-9 { transition-delay: 0.72s; }
+.reveal-delay-10 { transition-delay: 0.80s; }
+.reveal-delay-11 { transition-delay: 0.88s; }
+.reveal-delay-12 { transition-delay: 0.96s; }
+.reveal-delay-13 { transition-delay: 1.04s; }
+.reveal-delay-14 { transition-delay: 1.12s; }
+.reveal-delay-15 { transition-delay: 1.20s; }
+.reveal-delay-16 { transition-delay: 1.28s; }
+.reveal-delay-17 { transition-delay: 1.36s; }
+.reveal-delay-18 { transition-delay: 1.44s; }
 
 /* ========== Responsive ========== */
 @media (max-width: 1024px) {
-  .works-grid { grid-template-columns: repeat(2, 1fr); }
-  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .featured-card { height: 55vh; min-height: 400px; }
+  .works-masonry { columns: 2; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .featured-slide { height: 65vh; min-height: 400px; }
+  .featured-slide .slide-content { padding: 3rem; }
+  .featured-controls { right: 3rem; bottom: 3rem; }
 }
 
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
 
-  .section { padding: 4rem 1.5rem; }
-  .about { padding: 4rem 1.5rem; }
-  .contact { padding: 4rem 1.5rem; }
+  .section { padding: 5rem 1.5rem; }
+  .about { padding: 5rem 1.5rem; }
+  .contact { padding: 5rem 1.5rem; }
 
-  .works-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .works-masonry { columns: 1; }
 
-  .featured-card { height: 50vh; min-height: 350px; }
-  .featured-card .card-overlay { padding: 2rem; }
+  .featured-slide { height: 60vh; min-height: 350px; }
+  .featured-slide .slide-content { padding: 2rem; transform: translateY(0); opacity: 1; }
+  .featured-controls { right: 2rem; bottom: 2rem; }
 
-  .hero-name { letter-spacing: 0.1em; }
+  .hero-name { letter-spacing: 0.12em; }
   .hero-subtitle { letter-spacing: 0.15em; }
 
   .contact-links { gap: 1.5rem; flex-direction: column; align-items: center; }
 
-  .cursor, .cursor-dot { display: none; }
+  .cursor, .cursor-dot, .cursor-trail { display: none; }
   body { cursor: auto; }
   a, button { cursor: pointer; }
 
@@ -809,8 +1019,8 @@ body::before {
 
 @media (max-width: 480px) {
   .nav { padding: 1rem 1.2rem; }
-  .featured-card { height: 45vh; min-height: 300px; }
-  .featured-card .card-overlay { transform: translateY(0); }
+  .featured-slide { height: 55vh; min-height: 300px; }
+  .featured-section .section-header { padding: 0 1.5rem; }
 }
 </style>
 </head>
@@ -824,12 +1034,18 @@ body::before {
 <!-- Custom Cursor -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-trail" id="cursorTrail1"></div>
+<div class="cursor-trail" id="cursorTrail2"></div>
+<div class="cursor-trail" id="cursorTrail3"></div>
+<div class="cursor-trail" id="cursorTrail4"></div>
+<div class="cursor-trail" id="cursorTrail5"></div>
 
 <!-- Navigation -->
 <nav class="nav" id="nav">
   <a href="#hero" class="nav-logo">QWHE</a>
   <ul class="nav-links">
     <li><a href="#featured">Works</a></li>
+    <li><a href="#all-works">Portfolio</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -841,6 +1057,7 @@ body::before {
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#featured" class="mobile-link">Works</a>
+  <a href="#all-works" class="mobile-link">Portfolio</a>
   <a href="#about" class="mobile-link">About</a>
   <a href="#contact" class="mobile-link">Contact</a>
   <a href="https://www.zcool.com.cn/u/346744" target="_blank" rel="noopener">ZCOOL</a>
@@ -849,14 +1066,15 @@ body::before {
 
 <!-- Hero Section -->
 <section class="hero" id="hero">
+  <canvas id="particleCanvas"></canvas>
   <div class="hero-bg">
     <div class="gradient-1"></div>
     <div class="gradient-2"></div>
     <div class="gradient-3"></div>
   </div>
-  <div class="hero-content">
-    <h1 class="hero-name" id="heroName">QWHE</h1>
-    <p class="hero-subtitle" id="heroSubtitle">Brand Design &middot; Gift Packaging &middot; IP Derivatives</p>
+  <div class="hero-content" id="heroContent">
+    <h1 class="hero-name" id="heroName">ZHOU YOU</h1>
+    <p class="hero-subtitle" id="heroSubtitle"></p>
     <p class="hero-tagline">Based in Beijing, China</p>
   </div>
   <div class="scroll-indicator">
@@ -865,145 +1083,71 @@ body::before {
   </div>
 </section>
 
-<!-- Featured Works -->
-<section class="section" id="featured">
+<!-- Featured Works - Full Width Carousel -->
+<section class="featured-section" id="featured">
   <div class="section-header reveal">
     <div class="section-line"></div>
     <h2 class="section-title">Featured Works</h2>
   </div>
-  <div class="featured-grid">
+  <div class="featured-carousel-wrapper">
+    <div class="featured-carousel" id="featuredCarousel">
 
-    <a href="projects/feilong-duanwu.html" class="featured-card reveal reveal-delay-1">
-      <img class="card-image" src="images/feilong-duanwu.jpg" alt="飞龙在天·利见大人" loading="lazy">
-      <div class="card-overlay">
-        <div class="card-category">Packaging Design</div>
-        <h3 class="card-title">飞龙在天·利见大人</h3>
-        <p class="card-subtitle">百度端午高端礼盒包装</p>
-        <span class="card-link">View Project <span class="arrow">&rarr;</span></span>
+      <div class="featured-slide active" data-index="0">
+        <img class="slide-image" src="images/works/baidu-newyear/baidu-newyear-cover.jpg" alt="百度新年礼包">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-category">Packaging Design</div>
+          <h3 class="slide-title">百度新年礼包</h3>
+          <p class="slide-subtitle">百度新年员工礼品包装设计，包含红包、对联等新年周边产品</p>
+          <a href="projects/baidu-newyear.html" class="slide-link">View Project <span class="arrow">&rarr;</span></a>
+        </div>
       </div>
-    </a>
 
-    <a href="projects/baidu-zhongqiu-xingxing.html" class="featured-card reveal reveal-delay-2">
-      <img class="card-image" src="images/baidu-zhongqiu-xingxing.jpg" alt="行星探测联名盲盒" loading="lazy">
-      <div class="card-overlay">
-        <div class="card-category">Packaging Design</div>
-        <h3 class="card-title">行星探测联名盲盒</h3>
-        <p class="card-subtitle">百度中秋礼盒 · 中国行星探测联名</p>
-        <span class="card-link">View Project <span class="arrow">&rarr;</span></span>
+      <div class="featured-slide" data-index="1">
+        <img class="slide-image" src="images/works/duxiaoman-zhongqiu/duxiaoman-zhongqiu-cover.jpg" alt="度小满金融中秋员工礼品">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-category">Packaging Design</div>
+          <h3 class="slide-title">度小满金融中秋员工礼品</h3>
+          <p class="slide-subtitle">度小满金融中秋礼品包装设计，一稿过的高品质方案</p>
+          <a href="projects/duxiaoman-zhongqiu.html" class="slide-link">View Project <span class="arrow">&rarr;</span></a>
+        </div>
       </div>
-    </a>
 
-    <a href="projects/ant-financial.html" class="featured-card reveal reveal-delay-3">
-      <img class="card-image" src="images/ant-financial.jpg" alt="商务创意摆件" loading="lazy">
-      <div class="card-overlay">
-        <div class="card-category">Creative Products</div>
-        <h3 class="card-title">商务创意摆件</h3>
-        <p class="card-subtitle">蚂蚁金服品牌衍生品设计</p>
-        <span class="card-link">View Project <span class="arrow">&rarr;</span></span>
+      <div class="featured-slide" data-index="2">
+        <img class="slide-image" src="images/works/baidu-duanwu-gift/baidu-duanwu-gift-cover.jpg" alt="百度端午员工礼盒">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <div class="slide-category">Gift Packaging</div>
+          <h3 class="slide-title">百度端午员工礼盒</h3>
+          <p class="slide-subtitle">百度直销端午福利礼盒，好吃好看又好玩的端午奇遇记</p>
+          <a href="projects/baidu-duanwu-gift.html" class="slide-link">View Project <span class="arrow">&rarr;</span></a>
+        </div>
       </div>
-    </a>
 
+    </div>
+
+    <div class="featured-controls">
+      <div class="featured-dots" id="featuredDots">
+        <div class="featured-dot active" data-slide="0"></div>
+        <div class="featured-dot" data-slide="1"></div>
+        <div class="featured-dot" data-slide="2"></div>
+      </div>
+      <span class="featured-counter"><span class="current" id="featuredCurrent">01</span> / 03</span>
+      <button class="featured-nav-btn" id="featuredPrev" aria-label="Previous">&#8592;</button>
+      <button class="featured-nav-btn" id="featuredNext" aria-label="Next">&#8594;</button>
+    </div>
   </div>
 </section>
 
-<!-- All Works Grid -->
-<section class="section" id="works">
+<!-- All Works - Masonry Grid -->
+<section class="section" id="all-works">
   <div class="section-header reveal">
     <div class="section-line"></div>
     <h2 class="section-title">All Works</h2>
   </div>
-  <div class="works-grid">
-
-    <a href="projects/bytedance-duanwu.html" class="work-card reveal reveal-delay-1">
-      <img class="card-image" src="images/bytedance-duanwu.jpg" alt="字节范端午衍生品" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">IP Derivatives</span>
-        <h3 class="card-title">字节范端午衍生品</h3>
-        <p class="card-client">ByteDance &middot; 2020</p>
-      </div>
-    </a>
-
-    <a href="projects/tencent-q2.html" class="work-card reveal reveal-delay-2">
-      <img class="card-image" src="images/tencent-q2.jpg" alt="季度创意产品" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Creative Products</span>
-        <h3 class="card-title">季度创意产品</h3>
-        <p class="card-client">Tencent &middot; 2019</p>
-      </div>
-    </a>
-
-    <a href="projects/ziru-newyear.html" class="work-card reveal reveal-delay-3">
-      <img class="card-image" src="images/ziru-newyear.jpg" alt="新年礼品设计" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Packaging Design</span>
-        <h3 class="card-title">新年礼品设计</h3>
-        <p class="card-client">Ziroom &middot; 2020</p>
-      </div>
-    </a>
-
-    <a href="projects/sogou-translate.html" class="work-card reveal reveal-delay-4">
-      <img class="card-image" src="images/sogou-translate.jpg" alt="翻译宝礼盒" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Packaging Design</span>
-        <h3 class="card-title">翻译宝礼盒</h3>
-        <p class="card-client">Sogou &middot; 2019</p>
-      </div>
-    </a>
-
-    <a href="projects/didi-incense.html" class="work-card reveal reveal-delay-5">
-      <img class="card-image" src="images/didi-incense.jpg" alt="香插礼品设计" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Creative Products</span>
-        <h3 class="card-title">香插礼品设计</h3>
-        <p class="card-client">Didi &middot; 2019</p>
-      </div>
-    </a>
-
-    <a href="projects/duxiaoman-zhongqiu.html" class="work-card reveal reveal-delay-6">
-      <img class="card-image" src="images/duxiaoman-zhongqiu.jpg" alt="中秋员工礼品" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Packaging Design</span>
-        <h3 class="card-title">中秋员工礼品</h3>
-        <p class="card-client">DuXiaoMan &middot; 2019</p>
-      </div>
-    </a>
-
-    <a href="projects/wangzherongyao.html" class="work-card reveal reveal-delay-7">
-      <img class="card-image" src="images/wangzherongyao.jpg" alt="王者荣耀周边" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">IP Derivatives</span>
-        <h3 class="card-title">王者荣耀周边</h3>
-        <p class="card-client">Tencent Games &middot; 2019</p>
-      </div>
-    </a>
-
-    <a href="projects/baidu-newyear.html" class="work-card reveal reveal-delay-8">
-      <img class="card-image" src="images/baidu-newyear.jpg" alt="新年礼包" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Packaging Design</span>
-        <h3 class="card-title">新年礼包</h3>
-        <p class="card-client">Baidu &middot; 2019</p>
-      </div>
-    </a>
-
-    <a href="projects/vr-glasses.html" class="work-card reveal reveal-delay-9">
-      <img class="card-image" src="images/vr-glasses.jpg" alt="VR眼镜包装" loading="lazy">
-      <div class="card-border"></div>
-      <div class="card-info">
-        <span class="card-tag">Packaging Design</span>
-        <h3 class="card-title">VR眼镜包装</h3>
-        <p class="card-client">&mdash; &middot; 2018</p>
-      </div>
-    </a>
-
+  <div class="works-masonry" id="worksMasonry">
+    <!-- Populated by JS from works-data.js -->
   </div>
 </section>
 
@@ -1029,7 +1173,7 @@ body::before {
         <div class="stat-label">Brand Clients</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number" data-target="6">0</div>
+        <div class="stat-number" data-target="8">0</div>
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="clients-tags">
@@ -1041,6 +1185,8 @@ body::before {
         <span class="client-tag">Sogou</span>
         <span class="client-tag">Ziroom</span>
         <span class="client-tag">DuXiaoMan</span>
+        <span class="client-tag">Weibo</span>
+        <span class="client-tag">Sohu</span>
       </div>
     </div>
   </div>
@@ -1049,10 +1195,22 @@ body::before {
 <!-- Contact / Footer -->
 <section class="contact" id="contact">
   <h2 class="contact-heading reveal">Let's Connect</h2>
-  <div class="contact-links reveal reveal-delay-1">
+  <p class="contact-subtext reveal reveal-delay-1">Open for collaboration and creative projects. Let's create something meaningful together.</p>
+  <div class="contact-links reveal reveal-delay-2">
     <a href="mailto:qwhe@foxmail.com" class="contact-link">qwhe@foxmail.com</a>
     <a href="https://www.zcool.com.cn/u/346744" target="_blank" rel="noopener" class="contact-link">ZCOOL</a>
     <a href="https://www.behance.net/zhouyou" target="_blank" rel="noopener" class="contact-link">Behance</a>
+  </div>
+  <div class="social-links reveal reveal-delay-3">
+    <a href="https://www.zcool.com.cn/u/346744" target="_blank" rel="noopener" class="social-link" aria-label="ZCOOL">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+    </a>
+    <a href="https://www.behance.net/zhouyou" target="_blank" rel="noopener" class="social-link" aria-label="Behance">
+      <svg viewBox="0 0 24 24"><path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988H0V5.021h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zM3 11h3.584c2.508 0 2.906-3-.312-3H3v3zm3.391 3H3v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/></svg>
+    </a>
+    <a href="https://weibo.com/qwhe" target="_blank" rel="noopener" class="social-link" aria-label="Weibo">
+      <svg viewBox="0 0 24 24"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.583.631.273.825.985.442 1.574zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.307-.371-.164-.601.14-.229.436-.347.672-.24.239.09.318.367.181.588zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.642 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zM17.014 3.747c.281-.873 1.066-1.354 1.753-1.074.685.28.961 1.186.679 2.059-.281.873-1.066 1.354-1.753 1.074-.685-.28-.961-1.186-.679-2.059zM20.965 2.041c.737-2.287 2.795-3.547 4.597-2.814 1.795.729 2.518 3.111 1.78 5.398-.737 2.287-2.795 3.547-4.597 2.814-1.795-.729-2.518-3.111-1.78-5.398zM17.98 9.24c2.421-.866 5.094.148 5.983 2.268.896 2.136-.516 4.566-2.947 5.435-2.449.875-5.134-.151-6.015-2.293-.877-2.13.545-4.541 2.979-5.41z"/></svg>
+    </a>
   </div>
 </section>
 
@@ -1060,6 +1218,7 @@ body::before {
   <p>&copy; 2024 QWHE (周游). All rights reserved.</p>
 </footer>
 
+<script src="works-data.js"></script>
 <script>
 (function() {
   'use strict';
@@ -1068,77 +1227,228 @@ body::before {
   window.addEventListener('load', function() {
     setTimeout(function() {
       document.getElementById('loader').classList.add('hidden');
-    }, 600);
+    }, 800);
   });
 
-  /* ===== Custom Cursor ===== */
+  /* ===== Particle Background ===== */
+  var canvas = document.getElementById('particleCanvas');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var mouseX = 0, mouseY = 0;
+  var canvasMouseX = 0, canvasMouseY = 0;
+  var particleCount = 120;
+  var connectionDistance = 150;
+  var mouseInfluenceRadius = 200;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function Particle() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.radius = Math.random() * 2 + 0.5;
+    this.opacity = Math.random() * 0.5 + 0.2;
+    this.baseOpacity = this.opacity;
+  }
+
+  for (var i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+
+      // Mouse influence
+      var dx = canvasMouseX - p.x;
+      var dy = canvasMouseY - p.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mouseInfluenceRadius) {
+        var force = (mouseInfluenceRadius - dist) / mouseInfluenceRadius;
+        p.vx += dx * force * 0.0008;
+        p.vy += dy * force * 0.0008;
+        p.opacity = Math.min(1, p.baseOpacity + force * 0.5);
+      } else {
+        p.opacity += (p.baseOpacity - p.opacity) * 0.02;
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Damping
+      p.vx *= 0.99;
+      p.vy *= 0.99;
+
+      // Wrap around
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      // Draw particle
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(201, 169, 110, ' + p.opacity + ')';
+      ctx.fill();
+
+      // Draw connections
+      for (var j = i + 1; j < particles.length; j++) {
+        var p2 = particles[j];
+        var cdx = p.x - p2.x;
+        var cdy = p.y - p2.y;
+        var cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+        if (cdist < connectionDistance) {
+          var lineOpacity = (1 - cdist / connectionDistance) * 0.15;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = 'rgba(201, 169, 110, ' + lineOpacity + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // Track mouse for particles
+  document.addEventListener('mousemove', function(e) {
+    canvasMouseX = e.clientX;
+    canvasMouseY = e.clientY;
+  });
+
+  /* ===== Custom Cursor with Trail ===== */
   var cursor = document.getElementById('cursor');
   var cursorDot = document.getElementById('cursorDot');
-  var mouseX = 0, mouseY = 0;
+  var trails = [];
+  for (var t = 1; t <= 5; t++) {
+    trails.push({
+      el: document.getElementById('cursorTrail' + t),
+      x: 0, y: 0
+    });
+  }
+
+  var cursorMouseX = 0, cursorMouseY = 0;
   var cursorX = 0, cursorY = 0;
-  var dotX = 0, dotY = 0;
 
   document.addEventListener('mousemove', function(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dotX = e.clientX;
-    dotY = e.clientY;
+    cursorMouseX = e.clientX;
+    cursorMouseY = e.clientY;
+    cursorDot.style.left = cursorMouseX + 'px';
+    cursorDot.style.top = cursorMouseY + 'px';
   });
 
   function animateCursor() {
-    cursorX += (mouseX - cursorX) * 0.12;
-    cursorY += (mouseY - cursorY) * 0.12;
+    cursorX += (cursorMouseX - cursorX) * 0.12;
+    cursorY += (cursorMouseY - cursorY) * 0.12;
     cursor.style.left = cursorX + 'px';
     cursor.style.top = cursorY + 'px';
-    cursorDot.style.left = dotX + 'px';
-    cursorDot.style.top = dotY + 'px';
+
+    // Trail
+    var prevX = cursorX;
+    var prevY = cursorY;
+    for (var i = 0; i < trails.length; i++) {
+      var trail = trails[i];
+      var speed = 0.08 - i * 0.012;
+      trail.x += (prevX - trail.x) * Math.max(0.02, speed);
+      trail.y += (prevY - trail.y) * Math.max(0.02, speed);
+      trail.el.style.left = trail.x + 'px';
+      trail.el.style.top = trail.y + 'px';
+      trail.el.style.opacity = (0.3 - i * 0.05);
+      trail.el.style.width = (6 - i * 0.8) + 'px';
+      trail.el.style.height = (6 - i * 0.8) + 'px';
+      prevX = trail.x;
+      prevY = trail.y;
+    }
+
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
 
-  var hoverTargets = document.querySelectorAll('a, button, .work-card, .featured-card');
+  var hoverTargets = document.querySelectorAll('a, button, .work-card, .featured-slide, .featured-dot, .featured-nav-btn, .client-tag, .social-link');
   hoverTargets.forEach(function(el) {
     el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
     el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
   });
 
-  /* ===== Hero Text Animation ===== */
+  /* ===== Hero Letter Animation ===== */
   var heroName = document.getElementById('heroName');
-  var nameText = heroName.textContent;
+  var nameText = 'ZHOU YOU';
   heroName.innerHTML = '';
   for (var i = 0; i < nameText.length; i++) {
     var span = document.createElement('span');
     span.className = 'letter';
     span.textContent = nameText[i] === ' ' ? '\u00A0' : nameText[i];
-    span.style.animationDelay = (0.3 + i * 0.08) + 's';
+    span.style.animationDelay = (0.4 + i * 0.09) + 's';
     heroName.appendChild(span);
   }
 
+  /* ===== Typewriter Effect for Subtitle ===== */
   var heroSubtitle = document.getElementById('heroSubtitle');
-  var subText = heroSubtitle.textContent;
-  heroSubtitle.innerHTML = '';
-  var words = subText.split(' ');
-  words.forEach(function(word, idx) {
-    var span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = word + ' ';
-    span.style.animationDelay = (0.8 + idx * 0.12) + 's';
-    heroSubtitle.appendChild(span);
-  });
+  var typewriterText = 'Brand & Gift Packaging Designer';
+  var charIndex = 0;
+  var typewriterStarted = false;
+
+  function startTypewriter() {
+    if (typewriterStarted) return;
+    typewriterStarted = true;
+    heroSubtitle.innerHTML = '<span id="typewriterText"></span><span class="typewriter-cursor"></span>';
+    var textEl = document.getElementById('typewriterText');
+
+    function typeChar() {
+      if (charIndex < typewriterText.length) {
+        textEl.textContent += typewriterText[charIndex];
+        charIndex++;
+        setTimeout(typeChar, 60 + Math.random() * 40);
+      }
+    }
+    typeChar();
+  }
+
+  // Start typewriter after letter animation completes
+  setTimeout(startTypewriter, 1800);
+
+  /* ===== Parallax on Scroll ===== */
+  var heroContent = document.getElementById('heroContent');
+  var heroGradients = document.querySelectorAll('.hero-bg > div');
+
+  window.addEventListener('scroll', function() {
+    var scrollY = window.pageYOffset;
+    var heroHeight = window.innerHeight;
+
+    if (scrollY < heroHeight) {
+      var progress = scrollY / heroHeight;
+      heroContent.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
+      heroContent.style.opacity = 1 - progress * 1.2;
+
+      heroGradients[0].style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
+      heroGradients[1].style.transform = 'translateY(' + (scrollY * 0.25) + 'px)';
+      heroGradients[2].style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
+    }
+  }, { passive: true });
 
   /* ===== Mouse Parallax on Hero ===== */
   var hero = document.querySelector('.hero');
-  var heroContent = document.querySelector('.hero-content');
   hero.addEventListener('mousemove', function(e) {
     var rect = hero.getBoundingClientRect();
     var x = (e.clientX - rect.left) / rect.width - 0.5;
     var y = (e.clientY - rect.top) / rect.height - 0.5;
-    heroContent.style.transform = 'translate(' + (x * -15) + 'px, ' + (y * -10) + 'px)';
+    heroContent.style.transform = 'translate(' + (x * -20) + 'px, ' + (y * -15) + 'px)';
   });
   hero.addEventListener('mouseleave', function() {
     heroContent.style.transform = 'translate(0, 0)';
-    heroContent.style.transition = 'transform 0.5s ease-out';
-    setTimeout(function() { heroContent.style.transition = ''; }, 500);
+    heroContent.style.transition = 'transform 0.6s ease-out';
+    setTimeout(function() { heroContent.style.transition = ''; }, 600);
   });
 
   /* ===== Hamburger Menu ===== */
@@ -1163,6 +1473,11 @@ body::before {
   var lastScroll = 0;
   window.addEventListener('scroll', function() {
     var currentScroll = window.pageYOffset;
+    if (currentScroll > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
     if (currentScroll > lastScroll && currentScroll > 100) {
       nav.classList.add('hidden');
     } else {
@@ -1171,47 +1486,206 @@ body::before {
     lastScroll = currentScroll;
   }, { passive: true });
 
-  /* ===== Scroll Reveal (Intersection Observer) ===== */
-  var reveals = document.querySelectorAll('.reveal');
-  var revealObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
+  /* ===== Featured Carousel ===== */
+  var carousel = document.getElementById('featuredCarousel');
+  var slides = carousel.querySelectorAll('.featured-slide');
+  var dots = document.querySelectorAll('.featured-dot');
+  var currentSlide = 0;
+  var totalSlides = slides.length;
+  var autoPlayInterval = null;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragOffset = 0;
+  var carouselTranslate = 0;
+
+  function goToSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    currentSlide = index;
+    carouselTranslate = -currentSlide * 100;
+    carousel.style.transform = 'translateX(' + carouselTranslate + 'vw)';
+
+    slides.forEach(function(s, i) {
+      s.classList.toggle('active', i === currentSlide);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    dots.forEach(function(d, i) {
+      d.classList.toggle('active', i === currentSlide);
+    });
+    document.getElementById('featuredCurrent').textContent = ('0' + (currentSlide + 1)).slice(-2);
+  }
 
-  reveals.forEach(function(el) { revealObserver.observe(el); });
+  document.getElementById('featuredNext').addEventListener('click', function() {
+    goToSlide(currentSlide + 1);
+    resetAutoPlay();
+  });
 
-  /* ===== Parallax on Featured Cards ===== */
-  var featuredCards = document.querySelectorAll('.featured-card');
-  featuredCards.forEach(function(card) {
-    var img = card.querySelector('.card-image');
-    card.addEventListener('mousemove', function(e) {
-      var rect = card.getBoundingClientRect();
+  document.getElementById('featuredPrev').addEventListener('click', function() {
+    goToSlide(currentSlide - 1);
+    resetAutoPlay();
+  });
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      goToSlide(parseInt(this.getAttribute('data-slide')));
+      resetAutoPlay();
+    });
+  });
+
+  // Auto play
+  function startAutoPlay() {
+    autoPlayInterval = setInterval(function() {
+      goToSlide(currentSlide + 1);
+    }, 5000);
+  }
+
+  function resetAutoPlay() {
+    clearInterval(autoPlayInterval);
+    startAutoPlay();
+  }
+
+  startAutoPlay();
+
+  // Drag / Swipe
+  carousel.addEventListener('mousedown', function(e) {
+    isDragging = true;
+    dragStartX = e.clientX;
+    carousel.classList.add('dragging');
+  });
+
+  carousel.addEventListener('touchstart', function(e) {
+    isDragging = true;
+    dragStartX = e.touches[0].clientX;
+    carousel.classList.add('dragging');
+  }, { passive: true });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+    dragOffset = e.clientX - dragStartX;
+    var vw = window.innerWidth;
+    var percentOffset = (dragOffset / vw) * 100;
+    carousel.style.transform = 'translateX(' + (carouselTranslate + percentOffset) + 'vw)';
+  });
+
+  document.addEventListener('touchmove', function(e) {
+    if (!isDragging) return;
+    dragOffset = e.touches[0].clientX - dragStartX;
+    var vw = window.innerWidth;
+    var percentOffset = (dragOffset / vw) * 100;
+    carousel.style.transform = 'translateX(' + (carouselTranslate + percentOffset) + 'vw)';
+  }, { passive: true });
+
+  document.addEventListener('mouseup', function() {
+    if (!isDragging) return;
+    isDragging = false;
+    carousel.classList.remove('dragging');
+    var vw = window.innerWidth;
+    var threshold = vw * 0.15;
+    if (dragOffset < -threshold) {
+      goToSlide(currentSlide + 1);
+    } else if (dragOffset > threshold) {
+      goToSlide(currentSlide - 1);
+    } else {
+      goToSlide(currentSlide);
+    }
+    dragOffset = 0;
+    resetAutoPlay();
+  });
+
+  document.addEventListener('touchend', function() {
+    if (!isDragging) return;
+    isDragging = false;
+    carousel.classList.remove('dragging');
+    var vw = window.innerWidth;
+    var threshold = vw * 0.15;
+    if (dragOffset < -threshold) {
+      goToSlide(currentSlide + 1);
+    } else if (dragOffset > threshold) {
+      goToSlide(currentSlide - 1);
+    } else {
+      goToSlide(currentSlide);
+    }
+    dragOffset = 0;
+    resetAutoPlay();
+  });
+
+  // 3D Tilt Effect on Featured Slides
+  slides.forEach(function(slide) {
+    var img = slide.querySelector('.slide-image');
+    slide.addEventListener('mousemove', function(e) {
+      if (isDragging) return;
+      var rect = slide.getBoundingClientRect();
       var x = (e.clientX - rect.left) / rect.width - 0.5;
       var y = (e.clientY - rect.top) / rect.height - 0.5;
-      img.style.transform = 'scale(1.05) translate(' + (x * -10) + 'px, ' + (y * -10) + 'px)';
+      img.style.transform = 'scale(1.05) rotateY(' + (x * 5) + 'deg) rotateX(' + (-y * 5) + 'deg)';
     });
-    card.addEventListener('mouseleave', function() {
+    slide.addEventListener('mouseleave', function() {
       img.style.transform = '';
     });
   });
 
-  /* ===== Scroll Parallax for Featured Images ===== */
-  window.addEventListener('scroll', function() {
-    featuredCards.forEach(function(card) {
-      var rect = card.getBoundingClientRect();
-      var windowHeight = window.innerHeight;
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        var progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-        var img = card.querySelector('.card-image');
-        var yOffset = (progress - 0.5) * 40;
-        img.style.transform = 'translateY(' + yOffset + 'px)';
-      }
+  /* ===== Populate All Works (Masonry) ===== */
+  var masonryContainer = document.getElementById('worksMasonry');
+  var featuredSlugs = ['baidu-newyear', 'duxiaoman-zhongqiu', 'baidu-duanwu-gift'];
+  var noCoverSlugs = ['baidu-beifang-zhongqiu'];
+
+  if (typeof WORKS !== 'undefined') {
+    var allWorks = WORKS.filter(function(w) {
+      return featuredSlugs.indexOf(w.slug) === -1 && noCoverSlugs.indexOf(w.slug) === -1 && w.cover;
     });
-  }, { passive: true });
+
+    allWorks.forEach(function(work, idx) {
+      var card = document.createElement('a');
+      card.href = 'projects/' + work.slug + '.html';
+      card.className = 'work-card reveal reveal-delay-' + Math.min(idx + 1, 18);
+
+      // Extract client name from tags
+      var clientTag = '';
+      var categoryTag = '';
+      if (work.tags) {
+        work.tags.forEach(function(tag) {
+          if (['百度', '蚂蚁金服', '腾讯', '字节跳动', '滴滴', '搜狗', '自如', '度小满金融', '微博', '搜狐', '千叶珠宝'].indexOf(tag) !== -1) {
+            clientTag = tag;
+          }
+        });
+        if (work.tags.indexOf('包装') !== -1) categoryTag = 'Packaging Design';
+        else if (work.tags.indexOf('工业/产品') !== -1) categoryTag = 'Creative Products';
+        else if (work.tags.indexOf('UI') !== -1) categoryTag = 'UI / H5';
+        else if (work.tags.indexOf('平面') !== -1) categoryTag = 'Graphic Design';
+        else categoryTag = 'Design';
+      }
+
+      card.innerHTML =
+        '<img class="card-image" src="' + work.cover + '" alt="' + work.title + '" loading="lazy">' +
+        '<div class="card-border"></div>' +
+        '<div class="card-info">' +
+          '<span class="card-tag">' + categoryTag + '</span>' +
+          '<h3 class="card-title">' + work.title + '</h3>' +
+          (clientTag ? '<p class="card-client">' + clientTag + '</p>' : '') +
+          '<p class="card-views">' + (work.views ? work.views.toLocaleString() + ' views' : '') + '</p>' +
+        '</div>';
+
+      masonryContainer.appendChild(card);
+    });
+
+    // Re-observe newly added cards
+    setupReveal();
+  }
+
+  /* ===== Scroll Reveal (Intersection Observer) ===== */
+  function setupReveal() {
+    var reveals = document.querySelectorAll('.reveal:not(.visible)');
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+
+    reveals.forEach(function(el) { revealObserver.observe(el); });
+  }
+  setupReveal();
 
   /* ===== Counter Animation ===== */
   var statNumbers = document.querySelectorAll('.stat-number[data-target]');
@@ -1220,13 +1694,12 @@ body::before {
       if (entry.isIntersecting) {
         var el = entry.target;
         var target = parseInt(el.getAttribute('data-target'));
-        var duration = 2000;
-        var start = 0;
+        var duration = 2200;
         var startTime = null;
         function step(timestamp) {
           if (!startTime) startTime = timestamp;
           var progress = Math.min((timestamp - startTime) / duration, 1);
-          var eased = 1 - Math.pow(1 - progress, 3);
+          var eased = 1 - Math.pow(1 - progress, 4);
           el.textContent = Math.floor(eased * target) + '+';
           if (progress < 1) requestAnimationFrame(step);
         }
@@ -1239,13 +1712,13 @@ body::before {
   statNumbers.forEach(function(el) { counterObserver.observe(el); });
 
   /* ===== Magnetic Buttons ===== */
-  var magneticEls = document.querySelectorAll('.contact-link, .nav-links a');
+  var magneticEls = document.querySelectorAll('.contact-link, .nav-links a, .social-link');
   magneticEls.forEach(function(el) {
     el.addEventListener('mousemove', function(e) {
       var rect = el.getBoundingClientRect();
       var x = e.clientX - rect.left - rect.width / 2;
       var y = e.clientY - rect.top - rect.height / 2;
-      el.style.transform = 'translate(' + (x * 0.2) + 'px, ' + (y * 0.2) + 'px)';
+      el.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
     });
     el.addEventListener('mouseleave', function() {
       el.style.transform = '';
@@ -1263,6 +1736,17 @@ body::before {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
+  });
+
+  /* ===== Keyboard Navigation for Carousel ===== */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') {
+      goToSlide(currentSlide + 1);
+      resetAutoPlay();
+    } else if (e.key === 'ArrowLeft') {
+      goToSlide(currentSlide - 1);
+      resetAutoPlay();
+    }
   });
 
 })();
