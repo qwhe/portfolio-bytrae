@@ -7,7 +7,7 @@
 <meta name="description" content="QWHE (周游) — 北京品牌设计师，专注品牌礼品包装设计、IP衍生品、H5互动设计。曾服务百度、蚂蚁金服、腾讯、字节跳动等。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ========== CSS Custom Properties ========== */
 :root {
@@ -286,16 +286,16 @@ body::before {
 
 .mobile-menu a:hover { color: var(--accent); }
 
-/* ========== Hero Section ========== */
+/* ========== Hero Section (TRAE-style) ========== */
 .hero {
   position: relative;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 2rem;
+  padding: 6rem 5rem 4rem;
+  background: #0a0b0d;
 }
 
 #particleCanvas {
@@ -303,123 +303,294 @@ body::before {
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 0;
+  opacity: 0;
+  animation: canvasFadeIn 1.5s var(--ease-out-expo) 0.2s forwards;
 }
 
+@keyframes canvasFadeIn {
+  to { opacity: 1; }
+}
+
+/* Gradient blobs */
 .hero-bg {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.hero-bg .gradient-1 {
+.hero-bg .gradient-blob {
   position: absolute;
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
-  top: -15%; right: -10%;
-  animation: floatGradient1 20s ease-in-out infinite;
+  border-radius: 50%;
+  opacity: 0;
+  animation: blobFadeIn 1.5s var(--ease-out-expo) forwards;
 }
 
-.hero-bg .gradient-2 {
-  position: absolute;
+.gradient-blob--tl {
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
+  top: -20%; left: -15%;
+  animation-delay: 0s !important;
+}
+
+.gradient-blob--br {
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.04) 0%, transparent 70%);
+  bottom: -20%; right: -10%;
+  animation-delay: 0.2s !important;
+}
+
+.gradient-blob--center {
   width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, transparent 70%);
-  bottom: -15%; left: -10%;
-  animation: floatGradient2 25s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(160, 128, 80, 0.03) 0%, transparent 70%);
+  top: 35%; left: 40%;
+  animation-delay: 0.4s !important;
 }
 
-.hero-bg .gradient-3 {
-  position: absolute;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(160, 128, 80, 0.08) 0%, transparent 70%);
-  top: 40%; left: 30%;
-  animation: floatGradient3 18s ease-in-out infinite;
+@keyframes blobFadeIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-@keyframes floatGradient1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-60px, 40px) scale(1.15); }
-  66% { transform: translate(40px, -30px) scale(0.9); }
-}
-
-@keyframes floatGradient2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(50px, -40px) scale(1.1); }
-  66% { transform: translate(-40px, 30px) scale(1.15); }
-}
-
-@keyframes floatGradient3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-30px, -50px) scale(1.2); }
-}
-
-.hero-content {
+/* Dual-column layout */
+.hero-layout {
   position: relative;
   z-index: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  gap: 4rem;
+}
+
+/* Left column */
+.hero-left {
+  flex: 0 0 50%;
+  max-width: 50%;
+  opacity: 0;
+  transform: translateX(-60px);
+  animation: slideFromLeft 1.2s var(--ease-out-expo) 0.3s forwards;
+}
+
+@keyframes slideFromLeft {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-brand {
+  font-family: 'Inter', var(--font-display), sans-serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #f5f9fe;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.hero-tagline-cn {
+  font-family: 'Inter', var(--font-display), sans-serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #a6aab5;
+  line-height: 1.05;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: taglineReveal 1s var(--ease-out-expo) 0.8s forwards;
+}
+
+@keyframes taglineReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-divider {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(201, 169, 110, 0.6), transparent);
+  margin: 2rem 0 1.5rem;
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out-expo) 1.2s forwards;
+}
+
+.hero-disciplines {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: #a6aab5;
+  margin: 0 0 0.8rem;
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out-expo) 1.4s forwards;
+}
+
+.hero-desc {
+  font-family: 'Inter', var(--font-display), sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  color: #f5f9fe;
+  letter-spacing: 0.04em;
+  margin: 0 0 2.5rem;
+  opacity: 0;
+  animation: fadeIn 0.8s var(--ease-out-expo) 1.6s forwards;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Inter', var(--font-display), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #0a0b0d;
+  background: #f5f9fe;
+  padding: 0.85rem 2rem;
+  border-radius: 6px;
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s, gap 0.3s var(--ease-out-expo);
+  opacity: 0;
+  animation: fadeInUp 0.8s var(--ease-out-expo) 2s forwards;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(245, 249, 254, 0.15);
+  gap: 1rem;
+}
+
+.hero-cta-arrow {
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.hero-cta:hover .hero-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Right column - stacked cards */
+.hero-right {
+  flex: 0 0 50%;
+  max-width: 50%;
+  position: relative;
+  height: 520px;
+  opacity: 0;
+  transform: translateX(60px);
+  animation: slideFromRight 1.4s var(--ease-out-expo) 0.5s forwards;
+}
+
+@keyframes slideFromRight {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-card {
+  position: absolute;
+  display: block;
+  width: 85%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 169, 110, 0.12);
+  transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
   will-change: transform;
 }
 
-.hero-name {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 14vw, 12rem);
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: var(--fg);
-  line-height: 1;
-  margin-bottom: 1.2rem;
-  overflow: hidden;
+.hero-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--ease-out-expo);
 }
 
-.hero-name .letter {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(120%) rotateX(-40deg);
-  animation: letterBounceIn 0.9s var(--ease-out-expo) forwards;
+.hero-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 11, 13, 0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 1.2rem 1.5rem;
 }
 
-@keyframes letterBounceIn {
-  0% { opacity: 0; transform: translateY(120%) rotateX(-40deg); }
-  60% { opacity: 1; transform: translateY(-8%) rotateX(5deg); }
-  80% { transform: translateY(3%) rotateX(-2deg); }
-  100% { opacity: 1; transform: translateY(0) rotateX(0); }
+.hero-card-overlay--fade {
+  background: linear-gradient(180deg, transparent 20%, rgba(10, 11, 13, 0.9) 100%);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 95%);
 }
 
-.hero-subtitle {
-  font-family: var(--font-display);
-  font-size: clamp(0.85rem, 1.8vw, 1.15rem);
-  font-weight: 300;
-  letter-spacing: 0.35em;
-  color: var(--fg-muted);
-  min-height: 1.8em;
-  overflow: hidden;
-}
-
-.hero-subtitle .typewriter-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1.1em;
-  background: var(--accent);
-  margin-left: 2px;
-  vertical-align: text-bottom;
-  animation: cursorBlink 0.8s step-end infinite;
-}
-
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.hero-tagline {
-  margin-top: 1.8rem;
+.hero-card-label {
+  font-family: 'Inter', var(--font-display), sans-serif;
   font-size: 0.85rem;
-  color: var(--accent);
-  letter-spacing: 0.25em;
-  opacity: 0;
-  animation: fadeInUp 1s var(--ease-out-expo) 2.5s forwards;
+  font-weight: 500;
+  color: #f5f9fe;
+  letter-spacing: 0.04em;
 }
 
+/* Card positions - stacked with offset */
+.hero-card--1 {
+  top: 0;
+  left: 5%;
+  height: 280px;
+  z-index: 3;
+  opacity: 0;
+  animation: cardReveal1 0.8s var(--ease-out-expo) 0.7s forwards;
+}
+
+.hero-card--2 {
+  top: 120px;
+  left: 15%;
+  height: 260px;
+  z-index: 2;
+  opacity: 0;
+  animation: cardReveal2 0.8s var(--ease-out-expo) 1.0s forwards;
+}
+
+.hero-card--3 {
+  top: 240px;
+  left: 8%;
+  height: 260px;
+  z-index: 1;
+  opacity: 0;
+  animation: cardReveal3 0.8s var(--ease-out-expo) 1.3s forwards;
+}
+
+@keyframes cardReveal1 {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cardReveal2 {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cardReveal3 {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Hover: front card lifts up */
+.hero-card--1:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(201, 169, 110, 0.12), 0 0 0 1px rgba(201, 169, 110, 0.2);
+  z-index: 10;
+}
+
+.hero-card--2:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(201, 169, 110, 0.12), 0 0 0 1px rgba(201, 169, 110, 0.2);
+  z-index: 10;
+}
+
+.hero-card--3:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(201, 169, 110, 0.12), 0 0 0 1px rgba(201, 169, 110, 0.2);
+  z-index: 10;
+}
+
+.hero-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Scroll indicator */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -989,6 +1160,13 @@ body::before {
   .featured-slide { height: 65vh; min-height: 400px; }
   .featured-slide .slide-content { padding: 3rem; }
   .featured-controls { right: 3rem; bottom: 3rem; }
+
+  /* Hero responsive */
+  .hero { padding: 6rem 3rem 4rem; }
+  .hero-layout { flex-direction: column; text-align: left; gap: 3rem; }
+  .hero-left { flex: 0 0 100%; max-width: 100%; transform: none; animation-name: fadeInUp; }
+  .hero-right { display: none; }
+  .hero-brand, .hero-tagline-cn { font-size: clamp(3rem, 10vw, 5rem); }
 }
 
 @media (max-width: 768px) {
@@ -1005,9 +1183,6 @@ body::before {
   .featured-slide .slide-content { padding: 2rem; transform: translateY(0); opacity: 1; }
   .featured-controls { right: 2rem; bottom: 2rem; }
 
-  .hero-name { letter-spacing: 0.12em; }
-  .hero-subtitle { letter-spacing: 0.15em; }
-
   .contact-links { gap: 1.5rem; flex-direction: column; align-items: center; }
 
   .cursor, .cursor-dot, .cursor-trail { display: none; }
@@ -1015,12 +1190,22 @@ body::before {
   a, button { cursor: pointer; }
 
   .stat-number { font-size: 2rem; }
+
+  /* Hero responsive */
+  .hero { padding: 5rem 1.5rem 3rem; }
+  .hero-brand, .hero-tagline-cn { font-size: clamp(2.5rem, 12vw, 4rem); }
+  .hero-cta { width: 100%; justify-content: center; }
+  .hero-desc { font-size: 1rem; }
 }
 
 @media (max-width: 480px) {
   .nav { padding: 1rem 1.2rem; }
   .featured-slide { height: 55vh; min-height: 300px; }
   .featured-section .section-header { padding: 0 1.5rem; }
+
+  /* Hero responsive */
+  .hero { padding: 4.5rem 1.2rem 2rem; }
+  .hero-brand, .hero-tagline-cn { font-size: clamp(2rem, 14vw, 3rem); letter-spacing: 0.04em; }
 }
 </style>
 </head>
@@ -1068,15 +1253,45 @@ body::before {
 <section class="hero" id="hero">
   <canvas id="particleCanvas"></canvas>
   <div class="hero-bg">
-    <div class="gradient-1"></div>
-    <div class="gradient-2"></div>
-    <div class="gradient-3"></div>
+    <div class="gradient-blob gradient-blob--tl"></div>
+    <div class="gradient-blob gradient-blob--br"></div>
+    <div class="gradient-blob gradient-blob--center"></div>
   </div>
-  <div class="hero-content" id="heroContent">
-    <h1 class="hero-name" id="heroName">ZHOU YOU</h1>
-    <p class="hero-subtitle" id="heroSubtitle"></p>
-    <p class="hero-tagline">Based in Beijing, China</p>
+
+  <div class="hero-layout">
+    <!-- Left: Text -->
+    <div class="hero-left" id="heroLeft">
+      <h1 class="hero-brand" id="heroBrand">QWHE</h1>
+      <p class="hero-tagline-cn" id="heroTaglineCn">周游</p>
+      <div class="hero-divider"></div>
+      <p class="hero-disciplines">品牌设计 · 礼品包装 · IP衍生</p>
+      <p class="hero-desc">Brand Designer for Gift &amp; Packaging</p>
+      <a href="#featured" class="hero-cta" id="heroCta">View Works <span class="hero-cta-arrow">&rarr;</span></a>
+    </div>
+
+    <!-- Right: Featured cards -->
+    <div class="hero-right" id="heroRight">
+      <a href="projects/baidu-newyear.html" class="hero-card hero-card--1" id="heroCard1">
+        <img src="images/works/baidu-newyear/baidu-newyear-cover.jpg" alt="百度新年礼包" loading="eager">
+        <div class="hero-card-overlay">
+          <span class="hero-card-label">百度新年礼包</span>
+        </div>
+      </a>
+      <a href="projects/duxiaoman-zhongqiu.html" class="hero-card hero-card--2" id="heroCard2">
+        <img src="images/works/duxiaoman-zhongqiu/duxiaoman-zhongqiu-cover.jpg" alt="度小满中秋" loading="eager">
+        <div class="hero-card-overlay">
+          <span class="hero-card-label">度小满中秋</span>
+        </div>
+      </a>
+      <a href="projects/baidu-duanwu-gift.html" class="hero-card hero-card--3" id="heroCard3">
+        <img src="images/works/baidu-duanwu-gift/baidu-duanwu-gift-cover.jpg" alt="百度端午" loading="eager">
+        <div class="hero-card-overlay hero-card-overlay--fade">
+          <span class="hero-card-label">百度端午</span>
+        </div>
+      </a>
+    </div>
   </div>
+
   <div class="scroll-indicator">
     <span>Scroll</span>
     <div class="chevron"></div>
@@ -1230,15 +1445,10 @@ body::before {
     }, 800);
   });
 
-  /* ===== Particle Background ===== */
+  /* ===== Grid Background (replaces particle system) ===== */
   var canvas = document.getElementById('particleCanvas');
   var ctx = canvas.getContext('2d');
-  var particles = [];
-  var mouseX = 0, mouseY = 0;
   var canvasMouseX = 0, canvasMouseY = 0;
-  var particleCount = 120;
-  var connectionDistance = 150;
-  var mouseInfluenceRadius = 200;
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -1247,81 +1457,44 @@ body::before {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  function Particle() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
-    this.radius = Math.random() * 2 + 0.5;
-    this.opacity = Math.random() * 0.5 + 0.2;
-    this.baseOpacity = this.opacity;
-  }
-
-  for (var i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-  }
-
-  function drawParticles() {
+  function drawGrid() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
+    var spacing = 80;
+    var lineColor = 'rgba(201, 169, 110, 0.06)';
 
-      // Mouse influence
-      var dx = canvasMouseX - p.x;
-      var dy = canvasMouseY - p.y;
-      var dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < mouseInfluenceRadius) {
-        var force = (mouseInfluenceRadius - dist) / mouseInfluenceRadius;
-        p.vx += dx * force * 0.0008;
-        p.vy += dy * force * 0.0008;
-        p.opacity = Math.min(1, p.baseOpacity + force * 0.5);
-      } else {
-        p.opacity += (p.baseOpacity - p.opacity) * 0.02;
-      }
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 0.5;
 
-      p.x += p.vx;
-      p.y += p.vy;
-
-      // Damping
-      p.vx *= 0.99;
-      p.vy *= 0.99;
-
-      // Wrap around
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
-
-      // Draw particle
+    // Vertical lines
+    for (var x = 0; x < canvas.width; x += spacing) {
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(201, 169, 110, ' + p.opacity + ')';
-      ctx.fill();
-
-      // Draw connections
-      for (var j = i + 1; j < particles.length; j++) {
-        var p2 = particles[j];
-        var cdx = p.x - p2.x;
-        var cdy = p.y - p2.y;
-        var cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-        if (cdist < connectionDistance) {
-          var lineOpacity = (1 - cdist / connectionDistance) * 0.15;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = 'rgba(201, 169, 110, ' + lineOpacity + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
     }
 
-    requestAnimationFrame(drawParticles);
-  }
-  drawParticles();
+    // Horizontal lines
+    for (var y = 0; y < canvas.height; y += spacing) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
 
-  // Track mouse for particles
+    // Subtle mouse-proximity glow (very restrained)
+    var glowRadius = 250;
+    var grd = ctx.createRadialGradient(canvasMouseX, canvasMouseY, 0, canvasMouseX, canvasMouseY, glowRadius);
+    grd.addColorStop(0, 'rgba(201, 169, 110, 0.04)');
+    grd.addColorStop(1, 'rgba(201, 169, 110, 0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    requestAnimationFrame(drawGrid);
+  }
+  drawGrid();
+
+  // Track mouse for grid glow
   document.addEventListener('mousemove', function(e) {
     canvasMouseX = e.clientX;
     canvasMouseY = e.clientY;
@@ -1375,52 +1548,16 @@ body::before {
   }
   animateCursor();
 
-  var hoverTargets = document.querySelectorAll('a, button, .work-card, .featured-slide, .featured-dot, .featured-nav-btn, .client-tag, .social-link');
+  var hoverTargets = document.querySelectorAll('a, button, .work-card, .featured-slide, .featured-dot, .featured-nav-btn, .client-tag, .social-link, .hero-card, .hero-cta');
   hoverTargets.forEach(function(el) {
     el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
     el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
   });
 
-  /* ===== Hero Letter Animation ===== */
-  var heroName = document.getElementById('heroName');
-  var nameText = 'ZHOU YOU';
-  heroName.innerHTML = '';
-  for (var i = 0; i < nameText.length; i++) {
-    var span = document.createElement('span');
-    span.className = 'letter';
-    span.textContent = nameText[i] === ' ' ? '\u00A0' : nameText[i];
-    span.style.animationDelay = (0.4 + i * 0.09) + 's';
-    heroName.appendChild(span);
-  }
-
-  /* ===== Typewriter Effect for Subtitle ===== */
-  var heroSubtitle = document.getElementById('heroSubtitle');
-  var typewriterText = 'Brand & Gift Packaging Designer';
-  var charIndex = 0;
-  var typewriterStarted = false;
-
-  function startTypewriter() {
-    if (typewriterStarted) return;
-    typewriterStarted = true;
-    heroSubtitle.innerHTML = '<span id="typewriterText"></span><span class="typewriter-cursor"></span>';
-    var textEl = document.getElementById('typewriterText');
-
-    function typeChar() {
-      if (charIndex < typewriterText.length) {
-        textEl.textContent += typewriterText[charIndex];
-        charIndex++;
-        setTimeout(typeChar, 60 + Math.random() * 40);
-      }
-    }
-    typeChar();
-  }
-
-  // Start typewriter after letter animation completes
-  setTimeout(startTypewriter, 1800);
-
-  /* ===== Parallax on Scroll ===== */
-  var heroContent = document.getElementById('heroContent');
-  var heroGradients = document.querySelectorAll('.hero-bg > div');
+  /* ===== Hero Parallax on Scroll ===== */
+  var heroLeft = document.getElementById('heroLeft');
+  var heroRight = document.getElementById('heroRight');
+  var heroBlobs = document.querySelectorAll('.hero-bg .gradient-blob');
 
   window.addEventListener('scroll', function() {
     var scrollY = window.pageYOffset;
@@ -1428,12 +1565,20 @@ body::before {
 
     if (scrollY < heroHeight) {
       var progress = scrollY / heroHeight;
-      heroContent.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
-      heroContent.style.opacity = 1 - progress * 1.2;
 
-      heroGradients[0].style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
-      heroGradients[1].style.transform = 'translateY(' + (scrollY * 0.25) + 'px)';
-      heroGradients[2].style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
+      if (heroLeft) {
+        heroLeft.style.transform = 'translateY(' + (scrollY * 0.2) + 'px)';
+        heroLeft.style.opacity = 1 - progress * 1.3;
+      }
+      if (heroRight) {
+        heroRight.style.transform = 'translateX(' + (scrollY * 0.1) + 'px)';
+        heroRight.style.opacity = 1 - progress * 1.3;
+      }
+
+      heroBlobs.forEach(function(blob, i) {
+        var speeds = [0.08, 0.15, 0.1];
+        blob.style.transform = 'translateY(' + (scrollY * speeds[i] || 0.1) + 'px)';
+      });
     }
   }, { passive: true });
 
@@ -1443,12 +1588,17 @@ body::before {
     var rect = hero.getBoundingClientRect();
     var x = (e.clientX - rect.left) / rect.width - 0.5;
     var y = (e.clientY - rect.top) / rect.height - 0.5;
-    heroContent.style.transform = 'translate(' + (x * -20) + 'px, ' + (y * -15) + 'px)';
+
+    if (heroLeft) {
+      heroLeft.style.transform = 'translate(' + (x * -12) + 'px, ' + (y * -8) + 'px)';
+    }
+    if (heroRight) {
+      heroRight.style.transform = 'translate(' + (x * 8) + 'px, ' + (y * 5) + 'px)';
+    }
   });
   hero.addEventListener('mouseleave', function() {
-    heroContent.style.transform = 'translate(0, 0)';
-    heroContent.style.transition = 'transform 0.6s ease-out';
-    setTimeout(function() { heroContent.style.transition = ''; }, 600);
+    if (heroLeft) { heroLeft.style.transform = ''; heroLeft.style.transition = 'transform 0.6s ease-out'; setTimeout(function() { heroLeft.style.transition = ''; }, 600); }
+    if (heroRight) { heroRight.style.transform = ''; heroRight.style.transition = 'transform 0.6s ease-out'; setTimeout(function() { heroRight.style.transition = ''; }, 600); }
   });
 
   /* ===== Hamburger Menu ===== */
